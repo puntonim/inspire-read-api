@@ -1,0 +1,5 @@
+# Extend base requirements.
+-r requirements-base.txt
+
+ipython
+ipdb
