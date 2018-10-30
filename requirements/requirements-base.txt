@@ -1,2 +1,4 @@
-Django==2.1.2
-psycopg2-binary==2.7.5
+Django>=2.1.2,<3
+psycopg2-binary>=2.7.5,<3
+django-jsoneditor>=0.0.13,<1
+djangorestframework>=3.9.0,<4

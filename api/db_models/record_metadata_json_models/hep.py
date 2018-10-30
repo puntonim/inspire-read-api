@@ -33,7 +33,7 @@ class Author(utils.data.SmartgetDictMixin):
         return orcids[0]['value']
 
     @property
-    def has_record(self):
+    def has_recid(self):
         return bool(self.recid)
 
     @property
@@ -46,6 +46,6 @@ class Author(utils.data.SmartgetDictMixin):
     @property
     def record_metadata(self):
         from ..inspirehep import PidstorePid, RecordMetadata
-        if not self.has_record:
+        if not self.has_recid:
             return None
         return RecordMetadata.objects.get_by_pid(self.recid, pid_type=PidstorePid.TYPE_AUT)

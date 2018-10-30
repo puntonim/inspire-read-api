@@ -1,7 +1,7 @@
 import re
 
 
-SPLIT_KEY_PATTERN = re.compile('\.|\[')
+SPLIT_KEY_PATTERN = re.compile(r'\.|\[')
 
 
 def smartget(data, key, default=None):
@@ -10,7 +10,7 @@ def smartget(data, key, default=None):
         # v is a dictionary.
         if isinstance(v, dict):
             return v[k]
-        # v is a list.
+        # v is probably a list.
         elif ']' in k:
             k = k[:-1].replace('n', '-1')  # Get the last with either [-1] or [n].
             # Work around for list indexes and slices.
@@ -49,6 +49,11 @@ def smartget(data, key, default=None):
             value = getitem(k, value, default)
         except KeyError:
             return default
+        except TypeError:
+            if k and value is None:
+                # value is currently None and we are trying to get a key.
+                return default
+            raise
     return value
 
 

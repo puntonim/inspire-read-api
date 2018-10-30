@@ -2,8 +2,16 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from . import managers
-from .recordmetadata_json_models.hep import HepJson
-from .recordmetadata_json_models.authors import AuthorJson
+from .record_metadata_json_models.hep import HepJson
+from .record_metadata_json_models.authors import AuthorJson
+
+
+### Some pids:
+# lit big: 335153
+# lit small: 335152
+# auth: 1607170
+
+
 
 
 class PidstorePid(models.Model):
@@ -48,6 +56,9 @@ class PidstorePid(models.Model):
     object_type = models.CharField(max_length=3, blank=True, null=True)
     object_uuid = models.ForeignKey('RecordMetadata', models.DO_NOTHING, db_column='object_uuid')
 
+    objects = models.Manager()
+    registered = managers.PidstorePidRegisteredManager()
+
     @property
     def record_metadata(self):
         return self.object_uuid
@@ -58,15 +69,18 @@ class PidstorePid(models.Model):
         unique_together = (('pid_type', 'pid_value'),)
 
 
+# TODO handle deleted records, json['deleted'] = True
 class RecordMetadata(models.Model):
     SCHEMA_AUTHORS = 'authors.json'
     SCHEMA_CONFERENCES = 'conferences.json'
     SCHEMA_DATA = 'data.json'
     SCHEMA_EXPERIMENTS = 'experiments.json'
-    SCHEMA_HEP = 'hep.json'
+    SCHEMA_HEP = 'hep.json'  # Literature.
     SCHEMA_INSTITUTIONS = 'institutions.json'
     SCHEMA_JOBS = 'jobs.json'
     SCHEMA_JOURNALS = 'journals.json'
+    SCHEMAS = (SCHEMA_AUTHORS, SCHEMA_CONFERENCES, SCHEMA_DATA, SCHEMA_EXPERIMENTS,
+               SCHEMA_HEP, SCHEMA_INSTITUTIONS, SCHEMA_JOBS, SCHEMA_JOURNALS)
 
     created = models.DateTimeField()
     updated = models.DateTimeField()
@@ -75,6 +89,8 @@ class RecordMetadata(models.Model):
     version_id = models.IntegerField()
 
     objects = managers.RecordMetadataManager()
+    literature = managers.RecordMetadataLiteratureManager()
+    authors = managers.RecordMetadataAuthorsManager()
 
     @property
     def control_number(self):
@@ -92,36 +108,40 @@ class RecordMetadata(models.Model):
             return AuthorJson(self.json)
         raise NotImplementedError
 
-    def _is_schema_type(self, schema_type):
-        if schema_type in self.json.get('$schema'):
-            if not self.pid.pid_type == SCHEMAS_PIDTYPES[schema_type]:
-                raise Exception('$schema not mathcing pid_type')  ###### BETTER
-            return True
-        return False
+    @property
+    def schema_type(self):
+        for schema_type in self.SCHEMAS:
+            if schema_type in self.json.get('$schema'):
+                break
+        if not schema_type:
+            raise Exception('Unknown schema type: {}'.format(self.json.get('$schema')))
+        if not self.pid.pid_type == SCHEMAS_PIDTYPES[schema_type]:
+            raise Exception('$schema does not match the pid_type')  ###### BETTER
+        return schema_type
 
     def is_author(self):
-        return self._is_schema_type(self.SCHEMA_AUTHORS)
+        return self.schema_type == self.SCHEMA_AUTHORS
 
     def is_conference(self):
-        return self._is_schema_type(self.SCHEMA_CONFERENCES)
+        return self.schema_type == self.SCHEMA_CONFERENCES
 
     def is_data(self):
-        return self._is_schema_type(self.SCHEMA_DATA)
+        return self.schema_type == self.SCHEMA_DATA
 
     def is_experiment(self):
-        return self._is_schema_type(self.SCHEMA_EXPERIMENTS)
+        return self.schema_type == self.SCHEMA_EXPERIMENTS
 
     def is_hep(self):
-        return self._is_schema_type(self.SCHEMA_HEP)
+        return self.schema_type == self.SCHEMA_HEP
 
     def is_institution(self):
-        return self._is_schema_type(self.SCHEMA_INSTITUTIONS)
+        return self.schema_type == self.SCHEMA_INSTITUTIONS
 
     def is_job(self):
-        return self._is_schema_type(self.SCHEMA_JOBS)
+        return self.schema_type == self.SCHEMA_JOBS
 
     def is_journal(self):
-        return self._is_schema_type(self.SCHEMA_JOURNALS)
+        return self.schema_type == self.SCHEMA_JOURNALS
 
     class Meta:
         managed = False
@@ -163,6 +183,7 @@ class UserIdentity(models.Model):
     created = models.DateTimeField()
     updated = models.DateTimeField()
 
+    objects = models.Manager()
     orcids = managers.UserIdentityOrcidsManager()
 
     class Meta:
@@ -185,8 +206,9 @@ class RemoteAccount(models.Model):
 
 
 class RemoteToken(models.Model):
-    remote_account = models.ForeignKey('RemoteAccount', models.DO_NOTHING, db_column='id_remote_account', primary_key=True)
+    remote_account = models.OneToOneField('RemoteAccount', models.DO_NOTHING, db_column='id_remote_account', primary_key=True)
     token_type = models.CharField(max_length=40)
+    # TODO decode with password
     access_token = models.BinaryField()
     secret = models.TextField()
     created = models.DateTimeField()

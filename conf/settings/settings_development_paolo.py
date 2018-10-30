@@ -33,4 +33,4 @@ DATABASES = {
 }
 
 
-DATABASE_ROUTERS = ['api.dbmodels.routers.InspirehepRouter',]
+DATABASE_ROUTERS = ['api.db_models.routers.InspirehepRouter',]
