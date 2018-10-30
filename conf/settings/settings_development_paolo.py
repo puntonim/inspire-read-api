@@ -34,3 +34,4 @@ DATABASES = {
 
 
 DATABASE_ROUTERS = ['api.db_models.routers.InspirehepRouter',]
+ORCID_APP_CONSUMER_KEY = '0000-0001-8607-8906'

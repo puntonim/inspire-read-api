@@ -1,17 +1,10 @@
+from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from . import managers
 from .record_metadata_json_models.hep import HepJson
 from .record_metadata_json_models.authors import AuthorJson
-
-
-### Some pids:
-# lit big: 335153
-# lit small: 335152
-# auth: 1607170
-
-
 
 
 class PidstorePid(models.Model):
@@ -57,7 +50,7 @@ class PidstorePid(models.Model):
     object_uuid = models.ForeignKey('RecordMetadata', models.DO_NOTHING, db_column='object_uuid')
 
     objects = models.Manager()
-    registered = managers.PidstorePidRegisteredManager()
+    registered_objects = managers.PidstorePidRegisteredManager()
 
     @property
     def record_metadata(self):
@@ -89,8 +82,8 @@ class RecordMetadata(models.Model):
     version_id = models.IntegerField()
 
     objects = managers.RecordMetadataManager()
-    literature = managers.RecordMetadataLiteratureManager()
-    authors = managers.RecordMetadataAuthorsManager()
+    literature_objects = managers.RecordMetadataLiteratureManager()
+    author_objects = managers.RecordMetadataAuthorsManager()
 
     @property
     def control_number(self):
@@ -175,6 +168,16 @@ class User(models.Model):
         managed = False
         db_table = 'accounts_user'
 
+    @property
+    def orcid_remote_account(self):
+        return self.remoteaccount_set.get(client_id=settings.ORCID_APP_CONSUMER_KEY)
+
+
+# Record 250460
+# Has author 994322  2nd author
+# With orcid 0000-0002-3132-4417
+# senza UserIdentity e token
+
 
 class UserIdentity(models.Model):
     id = models.CharField(primary_key=True, max_length=255)
@@ -184,12 +187,16 @@ class UserIdentity(models.Model):
     updated = models.DateTimeField()
 
     objects = models.Manager()
-    orcids = managers.UserIdentityOrcidsManager()
+    orcid_objects = managers.UserIdentityOrcidsManager()
 
     class Meta:
         managed = False
         db_table = 'oauthclient_useridentity'
         unique_together = (('id', 'method'), ('user', 'method'),)
+
+    @property
+    def orcid_remote_account(self):
+        return self.user.orcid_remote_account
 
 
 class RemoteAccount(models.Model):

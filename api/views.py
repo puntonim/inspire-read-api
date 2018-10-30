@@ -28,6 +28,9 @@ def unhealth(request):
 
 
 class LiteratureDetail(generics.RetrieveAPIView):
+    """
+    $ curl 127.0.0.1:8000/api/literature/335152/?fields-include=titles,control_number
+    """
     serializer_class = serializers.RecordMetadataSerializer
     domain_model_class = LiteratureDetailDomain
 
@@ -44,11 +47,27 @@ class LiteratureDetail(generics.RetrieveAPIView):
         return Response(serializer.data)
 
 
+# TODO
+# class LiteratureList(generics.ListAPIView):
+#     """
+#     $ curl "127.0.0.1:8000/api/literature/?author=1607170&fields-include=titles"
+#     *** HARD  $ curl "127.0.0.1:8000/api/literature/?author-orcidiidentity=xxxxxx&push=true&fields-include=titles"
+#     """
+
 class AuthorDetail(LiteratureDetail):
+    """
+    $ curl 127.0.0.1:8000/api/authors/1607170/?fields-include=name,deleted
+    """
     domain_model_class = AuthorDetailDomain
 
 
+# TODO: manage records_metadata.json['deleted'] == True?
+
+
 class AuthorsList(generics.ListAPIView):
+    """
+    $ curl "127.0.0.1:8000/api/authors/?literature=335152&fields-include=name"
+    """
     #queryset = models.Survey.objects.filter(status=models.Survey.OPEN)
     serializer_class = serializers.RecordMetadataSerializer
     domain_model_class = AuthorsListDomain
@@ -67,13 +86,30 @@ class AuthorsList(generics.ListAPIView):
             raise
         return data
 
-    # def list(self, request, *args, **kwargs):
-    #     records = RecordMetadata.objects.all()
-    #     serializer = self.get_serializer(records, many=True)
-    #     return Response(serializer.data)
 
-    # TODO: mange json['deleted'] == True?
 
-    # def retrieve(self, request, *args, **kwargs):
-    #     survey = self.get_object()
-    #     return Response(survey.studio.sections)
+class OrcidIdentitiesList(generics.ListAPIView):
+    """
+    $ curl "127.0.0.1:8000/api/identities/orcid/?author=1039812&push=true&fields-include=name"
+    $ curl "127.0.0.1:8000/api/identities/orcid/?literature=1126991&push=true&fields-include=name"
+    """
+    #queryset = models.Survey.objects.filter(status=models.Survey.OPEN)
+    serializer_class = serializers.RecordMetadataSerializer
+    domain_model_class = AuthorsListDomain
+
+    def get_queryset(self, *args, **kwargs):
+        self.domain_model = self.domain_model_class(
+            query_params=self.request.query_params
+        )
+        return self.domain_model.get_queryset()
+
+    def paginate_queryset(self, *args, **kwargs):
+        raw_data = super().paginate_queryset(*args, **kwargs)
+        try:
+            data = self.domain_model.get_paginated_data(raw_data)
+        except Exception:
+            raise
+        return data
+
+
+

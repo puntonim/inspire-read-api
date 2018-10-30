@@ -30,6 +30,8 @@ urlpatterns = [
             name='author-detail'),
     re_path(r'^api/authors/$', views.AuthorsList.as_view(),
             name='authors-list'),
+    re_path(r'^api/identities/orcid/$', views.OrcidIdentitiesList.as_view(),
+            name='orcid-identities-list'),
 
     # DJRF browsable APIs auth views.
     path('api-auth/', include('rest_framework.urls')),
