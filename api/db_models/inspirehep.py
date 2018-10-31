@@ -39,7 +39,7 @@ class PidstorePid(models.Model):
         (TYPE_INS, 'institutions.json'),
         (TYPE_CON, 'conferences.json'),
     )
-
+    id = models.IntegerField(primary_key=True)
     created = models.DateTimeField()
     updated = models.DateTimeField()
     pid_type = models.CharField(max_length=6, choices=_TYPE_CHOICES)
@@ -75,9 +75,9 @@ class RecordMetadata(models.Model):
     SCHEMAS = (SCHEMA_AUTHORS, SCHEMA_CONFERENCES, SCHEMA_DATA, SCHEMA_EXPERIMENTS,
                SCHEMA_HEP, SCHEMA_INSTITUTIONS, SCHEMA_JOBS, SCHEMA_JOURNALS)
 
+    id = models.UUIDField(primary_key=True)
     created = models.DateTimeField()
     updated = models.DateTimeField()
-    id = models.UUIDField(primary_key=True)
     json = JSONField()
     version_id = models.IntegerField()
 
@@ -154,6 +154,7 @@ SCHEMAS_PIDTYPES = {
 
 
 class User(models.Model):
+    id = models.IntegerField(primary_key=True)
     email = models.CharField(unique=True, max_length=255, blank=True, null=True)
     password = models.CharField(max_length=255, blank=True, null=True)
     active = models.BooleanField(blank=True, null=True)
@@ -173,47 +174,46 @@ class User(models.Model):
         return self.remoteaccount_set.get(client_id=settings.ORCID_APP_CONSUMER_KEY)
 
 
-# Record 250460
-# Has author 994322  2nd author
-# With orcid 0000-0002-3132-4417
-# senza UserIdentity e token
 
 
-class UserIdentity(models.Model):
-    id = models.CharField(primary_key=True, max_length=255)
-    method = models.CharField(max_length=255)
-    user = models.ForeignKey('User', models.DO_NOTHING, db_column='id_user')
-    created = models.DateTimeField()
-    updated = models.DateTimeField()
 
-    objects = models.Manager()
-    orcid_objects = managers.UserIdentityOrcidsManager()
+# class UserIdentity(models.Model):
+#     id = models.CharField(primary_key=True, max_length=255)
+#     method = models.CharField(max_length=255)
+#     user = models.ForeignKey('User', models.DO_NOTHING, db_column='id_user')
+#     created = models.DateTimeField()
+#     updated = models.DateTimeField()
+#
+#     objects = models.Manager()
+#     orcid_objects = managers.UserIdentityOrcidsManager()
+#
+#     class Meta:
+#         managed = False
+#         db_table = 'oauthclient_useridentity'
+#         # Primary key = (id, method)
+#         unique_together = (('id', 'method'), ('user', 'method'),)
+#
+#     @property
+#     def orcid_remote_account(self):
+#         return self.user.orcid_remote_account
 
-    class Meta:
-        managed = False
-        db_table = 'oauthclient_useridentity'
-        unique_together = (('id', 'method'), ('user', 'method'),)
 
-    @property
-    def orcid_remote_account(self):
-        return self.user.orcid_remote_account
-
-
-class RemoteAccount(models.Model):
-    user = models.ForeignKey('User', models.DO_NOTHING)
-    client_id = models.CharField(max_length=255)
-    extra_data = JSONField()  # It is actually a JSON (no JSONB).
-    created = models.DateTimeField()
-    updated = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'oauthclient_remoteaccount'
-        unique_together = (('user', 'client_id'),)
+# class RemoteAccount(models.Model):
+#     id = models.CharField(primary_key=True, max_length=255)
+#     user = models.ForeignKey('User', models.DO_NOTHING)
+#     client_id = models.CharField(max_length=255)  # Inspire APP's ORCID.
+#     extra_data = JSONField()  # It is actually a JSON (no JSONB).
+#     created = models.DateTimeField()
+#     updated = models.DateTimeField()
+#
+#     class Meta:
+#         managed = False
+#         db_table = 'oauthclient_remoteaccount'
+#         unique_together = (('user', 'client_id'),)
 
 
 class RemoteToken(models.Model):
-    remote_account = models.OneToOneField('RemoteAccount', models.DO_NOTHING, db_column='id_remote_account', primary_key=True)
+    orcid_identity = models.OneToOneField('OrcidIdentity', models.DO_NOTHING, db_column='id_remote_account', primary_key=True)
     token_type = models.CharField(max_length=40)
     # TODO decode with password
     access_token = models.BinaryField()
@@ -224,4 +224,21 @@ class RemoteToken(models.Model):
     class Meta:
         managed = False
         db_table = 'oauthclient_remotetoken'
+        # Primary key: (id_remote_account, token_type)
         unique_together = (('remote_account', 'token_type'),)
+
+
+class OrcidIdentity(models.Model):
+    orcid_value = models.CharField(unique=True, max_length=255)
+    remoteaccount_user_id = models.IntegerField(unique=True)
+    useridentity_user_id = models.IntegerField(unique=True)
+    user = models.ForeignKey('User', models.DO_NOTHING, db_column='remoteaccount_user_id')
+    client_id = models.CharField(max_length=255)  # Inspire APP's ORCID.
+    extra_data = JSONField()  # It is actually a JSON (no JSONB).
+    id = models.IntegerField(primary_key=True, db_column='remoteaccount_id')  # Originally: remoteaccount.id.
+
+    class Meta:
+        managed = False
+        db_table = 'oauthclient_orcid_identity'
+        # # Primary key: (id_remote_account, token_type)
+        # unique_together = (('remote_account', 'token_type'),)

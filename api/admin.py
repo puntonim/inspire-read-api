@@ -18,6 +18,5 @@ class RecordMetadataAdmin(admin.ModelAdmin):
 admin.site.register(inspirehep.RecordMetadata, RecordMetadataAdmin)
 admin.site.register(inspirehep.PidstorePid)
 admin.site.register(inspirehep.User)
-admin.site.register(inspirehep.UserIdentity)
-admin.site.register(inspirehep.RemoteAccount)
+admin.site.register(inspirehep.OrcidIdentity)
 admin.site.register(inspirehep.RemoteToken)

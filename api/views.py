@@ -87,14 +87,14 @@ class AuthorsList(generics.ListAPIView):
         return data
 
 
-
 class OrcidIdentitiesList(generics.ListAPIView):
     """
-    $ curl "127.0.0.1:8000/api/identities/orcid/?author=1039812&push=true"
-    $ curl "127.0.0.1:8000/api/identities/orcid/?literature=1126991&push=true"
+    $ curl "127.0.0.1:8000/api/identities/orcid/?author=1039812&push=true&fields-extra=tokens"
+    $ curl "127.0.0.1:8000/api/identities/orcid/?literature=1126991&push=true&fields-extra=tokens"
     TODO:
      - push=true
-     - author
+     - author=xxxx
+     - fields-extra=tokens
     """
     serializer_class = serializers.UserIdentitySerializer
     domain_model_class = OrcidIdentitiesListDomain

@@ -61,3 +61,32 @@ Record 1126991
 Has author 1039812 (1st author)
 With orcid 0000-0001-9835-7128
 Con UserIdentity e User 52921
+
+
+OPERAZIONI SU DB ISNPIRE
+=========================
+- RemoteAccount.extra_data to JSONB:
+ALTER TABLE public.oauthclient_remoteaccount
+    ALTER COLUMN extra_data SET DATA TYPE jsonb;
+
+- Creazione della view:
+Postgresql 9.6.2
+https://www.postgresql.org/docs/9.6/static/sql-createview.html
+
+CREATE VIEW oauthclient_orcid_identity
+AS
+    SELECT oauthclient_useridentity.id as orcid_value,
+           oauthclient_remoteaccount.user_id as remoteaccount_user_id,
+           oauthclient_useridentity.id_user as useridentity_user_id,
+           oauthclient_remoteaccount.client_id,
+           oauthclient_remoteaccount.extra_data,
+           oauthclient_remoteaccount.id as remoteaccount_id
+    FROM public.oauthclient_useridentity
+    FULL OUTER JOIN public.oauthclient_remoteaccount
+    ON oauthclient_useridentity.id_user = oauthclient_remoteaccount.user_id
+    WHERE oauthclient_useridentity.method = 'orcid'
+    OR oauthclient_useridentity.method is NULL;
+
+Nota che alcuni hanno dati inconsistenti:
+remoteaccount_id=5888 non ha useridentity enon ha token
+ce ne sono 9 cosi
