@@ -23,7 +23,7 @@ length = 2526662
 json['control_number'] = 335153
 https://labs.inspirehep.net/api/literature/335153
 
-Lit grande: 335153
+Lit + grande: 335153
 Lit small: 335152 w/ 3 authors Dugan(1011268), Mitchell(1008115), Chivukula(1013679)
 Auth: 1607170
 

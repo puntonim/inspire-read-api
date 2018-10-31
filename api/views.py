@@ -11,6 +11,7 @@ from . import serializers
 from .db_models.inspirehep import RecordMetadata
 from .domain_models.literature import LiteratureDetailDomain
 from .domain_models.authors import AuthorDetailDomain, AuthorsListDomain
+from .domain_models.orcids import OrcidIdentitiesListDomain
 
 
 def health(request):
@@ -68,7 +69,6 @@ class AuthorsList(generics.ListAPIView):
     """
     $ curl "127.0.0.1:8000/api/authors/?literature=335152&fields-include=name"
     """
-    #queryset = models.Survey.objects.filter(status=models.Survey.OPEN)
     serializer_class = serializers.RecordMetadataSerializer
     domain_model_class = AuthorsListDomain
 
@@ -90,26 +90,19 @@ class AuthorsList(generics.ListAPIView):
 
 class OrcidIdentitiesList(generics.ListAPIView):
     """
-    $ curl "127.0.0.1:8000/api/identities/orcid/?author=1039812&push=true&fields-include=name"
-    $ curl "127.0.0.1:8000/api/identities/orcid/?literature=1126991&push=true&fields-include=name"
+    $ curl "127.0.0.1:8000/api/identities/orcid/?author=1039812&push=true"
+    $ curl "127.0.0.1:8000/api/identities/orcid/?literature=1126991&push=true"
+    TODO:
+     - push=true
+     - author
     """
-    #queryset = models.Survey.objects.filter(status=models.Survey.OPEN)
-    serializer_class = serializers.RecordMetadataSerializer
-    domain_model_class = AuthorsListDomain
+    serializer_class = serializers.UserIdentitySerializer
+    domain_model_class = OrcidIdentitiesListDomain
 
     def get_queryset(self, *args, **kwargs):
         self.domain_model = self.domain_model_class(
             query_params=self.request.query_params
         )
         return self.domain_model.get_queryset()
-
-    def paginate_queryset(self, *args, **kwargs):
-        raw_data = super().paginate_queryset(*args, **kwargs)
-        try:
-            data = self.domain_model.get_paginated_data(raw_data)
-        except Exception:
-            raise
-        return data
-
 
 

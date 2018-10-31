@@ -14,7 +14,7 @@ class AuthorsListDomain(RecordMetadataListDomainBase):
         # Query filters.
         literature_recid = self.query_params_parser.literature
         if literature_recid:
-            return RecordMetadata.author_objects.filter_by_literature(literature_recid)
+            queryset = RecordMetadata.author_objects.filter_by_literature(literature_recid)
         else:
             queryset = RecordMetadata.author_objects.all()
         return queryset

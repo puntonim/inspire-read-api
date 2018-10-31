@@ -56,6 +56,7 @@ def smartget(data, key, default=None):
             raise
     return value
 
+# TODO consider replace everything with JQ
 
 def smartget_if(data, key, condition, default=None):
     unfiltered_result = smartget(data, key, default)
