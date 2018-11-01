@@ -83,7 +83,7 @@ OPERAZIONI SU DB INSPIRE
 # no need -- GRANT USAGE ON SCHEMA public TO "inspire-read-api";
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO "inspire-read-api";
 
-- RemoteAccount.extra_data to JSONB:
+- RemoteAccount.extra_data to JSONB (prima di creare la view!):
 ALTER TABLE public.oauthclient_remoteaccount
     ALTER COLUMN extra_data SET DATA TYPE jsonb;
 
@@ -112,3 +112,5 @@ ce ne sono 12 cosi
 Poi aggiungere ancora i permessi di select:
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO "inspire-read-api";
 
+- Per i test locali l'utente deve poter creare i db di test:
+ALTER USER "inspire-read-api" CREATEDB;

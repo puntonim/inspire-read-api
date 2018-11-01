@@ -10,7 +10,7 @@ SECRET_KEY = 'secretkey'
 AUTH_PASSWORD_VALIDATORS = []
 ALLOWED_HOSTS = ['*']
 
-INSPIREHEP_DATABASE_NAME = 'inspire-prod-dump-20181101'
+INSPIRE_DATABASE_KEY = 'inspire'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -25,15 +25,18 @@ DATABASES = {
     # no need -- GRANT CONNECT ON DATABASE "inspirehep-prod-dump" TO "inspire-read-api";
     # no need -- GRANT USAGE ON SCHEMA public TO "inspire-read-api";
     # GRANT SELECT ON ALL TABLES IN SCHEMA public TO "inspire-read-api";
-    INSPIREHEP_DATABASE_NAME: {
+    INSPIRE_DATABASE_KEY: {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': INSPIREHEP_DATABASE_NAME,
+        #'NAME': 'inspire-prod-dump-201804',
+        'NAME': 'inspire-prod-dump-20181101',
         'USER': 'inspire-read-api',
         'PASSWORD': 'Password123',
     }
-
 }
 
 
 DATABASE_ROUTERS = ['api.db_models.routers.InspirehepRouter',]
 ORCID_APP_CONSUMER_KEY = '0000-0001-8607-8906'
+
+MIGRATION_MODULES = {
+    'api': 'tests.api.db_models.migrations'}

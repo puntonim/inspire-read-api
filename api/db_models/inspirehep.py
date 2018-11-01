@@ -7,6 +7,9 @@ from .record_metadata_json_models.hep import HepJson
 from .record_metadata_json_models.authors import AuthorJson
 
 
+MANAGED = False
+
+
 class PidstorePid(models.Model):
     STATUS_NEW = 'N'
     STATUS_RESERVED = 'K'
@@ -57,7 +60,7 @@ class PidstorePid(models.Model):
         return self.object_uuid
 
     class Meta:
-        managed = False
+        managed = MANAGED
         db_table = 'pidstore_pid'
         unique_together = (('pid_type', 'pid_value'),)
 
@@ -137,7 +140,7 @@ class RecordMetadata(models.Model):
         return self.schema_type == self.SCHEMA_JOURNALS
 
     class Meta:
-        managed = False
+        managed = MANAGED
         db_table = 'records_metadata'
 
 
@@ -166,7 +169,7 @@ class User(models.Model):
     login_count = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = MANAGED
         db_table = 'accounts_user'
 
     @property
@@ -188,7 +191,7 @@ class User(models.Model):
 #     orcid_objects = managers.UserIdentityOrcidsManager()
 #
 #     class Meta:
-#         managed = False
+#         managed = MANAGED
 #         db_table = 'oauthclient_useridentity'
 #         # Primary key = (id, method)
 #         unique_together = (('id', 'method'), ('user', 'method'),)
@@ -207,7 +210,7 @@ class User(models.Model):
 #     updated = models.DateTimeField()
 #
 #     class Meta:
-#         managed = False
+#         managed = MANAGED
 #         db_table = 'oauthclient_remoteaccount'
 #         unique_together = (('user', 'client_id'),)
 
@@ -222,7 +225,7 @@ class RemoteToken(models.Model):
     updated = models.DateTimeField()
 
     class Meta:
-        managed = False
+        managed = MANAGED
         db_table = 'oauthclient_remotetoken'
         # Primary key: (id_remote_account, token_type)
         unique_together = (('orcid_identity', 'token_type'),)
@@ -252,7 +255,7 @@ class OrcidIdentity(models.Model):
     objects = managers.OrcidIdentityManager()
 
     class Meta:
-        managed = False
+        managed = MANAGED
         db_table = 'oauthclient_orcid_identity'
         # # Primary key: (id_remote_account, token_type)
         # unique_together = (('remote_account', 'token_type'),)

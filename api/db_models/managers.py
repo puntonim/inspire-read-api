@@ -71,7 +71,7 @@ class RecordMetadataAuthorsManager(models.Manager):
 
     def filter_by_literature(self, pid_value):
         literature = self.model.literature_objects.get_by_pid(pid_value)
-        recids = [aut.recid for aut in literature.json_model.authors_enclosed if aut.has_recid]
+        recids = [aut.recid for aut in literature.json_model.authors_embedded if aut.has_recid]
         return self.filter_by_pids(recids)
 
 
@@ -86,14 +86,14 @@ class OrcidIdentityManager(models.Manager):
         record = RecordMetadata.literature_objects.get_by_pid(pid_value)
 
         user_identities = []
-        for author_enclosed in record.json_model.authors_enclosed:
+        for author_embedded in record.json_model.authors_embedded:
             uid = None
-            if author_enclosed.has_orcid_enclosed:
+            if author_embedded.has_orcid_embedded:
                 # Business rule: is_curated not necessary in this case.
-                uid = author_enclosed.orcid_user_identity
-            elif author_enclosed.is_curated and author_enclosed.has_recid:
-                author = author_enclosed.record_metadata
-                if author.json_model.has_orcid_enclosed:
+                uid = author_embedded.orcid_user_identity
+            elif author_embedded.is_curated and author_embedded.has_recid:
+                author = author_embedded.record_metadata
+                if author.json_model.has_orcid_embedded:
                     uid = author.json_model.orcid_user_identity
             if uid:
                 user_identities.append(uid)

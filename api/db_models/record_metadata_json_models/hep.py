@@ -6,25 +6,25 @@ import utils.data
 
 class HepJson(utils.data.SmartgetDictMixin):
     @property
-    def authors_enclosed(self):
-        return [AuthorEnclosed(a) for a in self.smartget('authors', [])]
+    def authors_embedded(self):
+        return [AuthorEmbedded(a) for a in self.smartget('authors', [])]
 
     @property
-    def curated_authors_enclosed(self):
-        return [a for a in self.authors_enclosed if a.is_curated]
+    def curated_authors_embedded(self):
+        return [a for a in self.authors_embedded if a.is_curated]
 
 
-class AuthorEnclosed(utils.data.SmartgetDictMixin):
+class AuthorEmbedded(utils.data.SmartgetDictMixin):
     @property
     def is_curated(self):
         return self.smartget('curated_relation', False)
 
     @property
-    def has_orcid_enclosed(self):
-        return bool(self.orcid_enclosed)
+    def has_orcid_embedded(self):
+        return bool(self.orcid_embedded)
 
     @property
-    def orcid_enclosed(self):
+    def orcid_embedded(self):
         orcids = self.smartget_if('ids', lambda id: id['schema'].upper()=='ORCID' if id else False)
         if not orcids:
             return None
@@ -39,7 +39,7 @@ class AuthorEnclosed(utils.data.SmartgetDictMixin):
     @property
     def orcid_identity(self):
         """
-        Not all orcid_enclosed have a matching OrcidIdentity.
+        Not all orcid_embedded have a matching OrcidIdentity.
         Typically there is a OrcidIdentity if the author has logged in in Legacy
         or Labs with her ORCID.
         """
