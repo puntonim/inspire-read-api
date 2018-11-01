@@ -19,21 +19,20 @@ class AuthorJson(utils.data.SmartgetDictMixin):
         return orcids[0]['value']
 
     @property
-    def has_orcid_user_identity(self):
-        return bool(self.orcid_user_identity)
+    def has_orcid_identity(self):
+        return bool(self.orcid_identity)
 
     @property
     def orcid_user_identity(self):
         """
-        Not all orcid_enclosed have a matching UserIdentity.
-        Typically there is a UserIdentity if the author has logged in in Legacy
+        Not all orcid_enclosed have a matching OrcidIdentity.
+        Typically there is a OrcidIdentity if the author has logged in in Legacy
         or Labs with his ORCID.
         """
-        from ..inspirehep import UserIdentity
+        from ..inspirehep import OrcidIdentity
         if not self.has_orcid_enclosed:
             return None
         try:
-            return UserIdentity.orcid_objects.get(id=self.orcid_enclosed)
-        except UserIdentity.DoesNotExist:
+            return OrcidIdentity.objects.get(orcid_value=self.orcid_enclosed)
+        except OrcidIdentity.DoesNotExist:
             return None
-

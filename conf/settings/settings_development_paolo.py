@@ -20,12 +20,13 @@ DATABASES = {
     },
 
     # To grant read permission to the inspirehep Postgres db:
-    # GRANT CONNECT ON DATABASE "inspirehep-prod-dump" TO "inspire-read-api";
-    # GRANT USAGE ON SCHEMA public TO "inspire-read-api";
+    # no need -- GRANT CONNECT ON DATABASE "inspirehep-prod-dump" TO "inspire-read-api";
+    # no need -- GRANT USAGE ON SCHEMA public TO "inspire-read-api";
     # GRANT SELECT ON ALL TABLES IN SCHEMA public TO "inspire-read-api";
     'inspirehep': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'inspirehep-prod-dump',
+        #'NAME': 'inspire-prod-dump-20181101',
+        'NAME': 'inspire-prod-dump-201804',
         'USER': 'inspire-read-api',
         'PASSWORD': 'Password123',
     }

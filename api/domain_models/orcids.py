@@ -1,4 +1,4 @@
-from ..db_models.inspirehep import RecordMetadata, UserIdentity
+from ..db_models.inspirehep import RecordMetadata, OrcidIdentity
 
 from .query_params import QueryParamsParser
 from .record_metadata_base import (
@@ -13,7 +13,7 @@ class OrcidIdentitiesListDomain(RecordMetadataListDomainBase):
         # Query filters.
         literature_recid = self.query_params_parser.literature
         if literature_recid:
-            queryset = UserIdentity.orcid_objects.filter_by_authored_literature(literature_recid)
+            queryset = OrcidIdentity.objects.filter_by_authored_literature(literature_recid)
         else:
-            queryset = UserIdentity.orcid_objects.all()
+            queryset = OrcidIdentity.objects.all()
         return queryset

@@ -171,7 +171,7 @@ class User(models.Model):
 
     @property
     def orcid_remote_account(self):
-        return self.remoteaccount_set.get(client_id=settings.ORCID_APP_CONSUMER_KEY)
+        return self.orcididentity_set.get(client_id=settings.ORCID_APP_CONSUMER_KEY)
 
 
 
@@ -225,17 +225,31 @@ class RemoteToken(models.Model):
         managed = False
         db_table = 'oauthclient_remotetoken'
         # Primary key: (id_remote_account, token_type)
-        unique_together = (('remote_account', 'token_type'),)
+        unique_together = (('orcid_identity', 'token_type'),)
 
 
 class OrcidIdentity(models.Model):
+    """
+    This is actually a view that (full outer) joins useridentity and remoteaccount.
+    """
+    # TODO nota che ci sono 9 remoteacc senza userid, quindi il `orcid_value`
+    # e' null, quindi forse qs cambo deve essere nullable. O meglio lanciare un
+    # eccezione.
+    # Originally: useridentity.id.
     orcid_value = models.CharField(unique=True, max_length=255)
-    remoteaccount_user_id = models.IntegerField(unique=True)
+    ##### Originally: remoteaccount.user_id.
+    ###remoteaccount_user_id = models.IntegerField(unique=True)
+    # Originally: useridentity.id_user.
     useridentity_user_id = models.IntegerField(unique=True)
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='remoteaccount_user_id')
+    # Originally: remoteaccount.client_id.
     client_id = models.CharField(max_length=255)  # Inspire APP's ORCID.
-    extra_data = JSONField()  # It is actually a JSON (no JSONB).
-    id = models.IntegerField(primary_key=True, db_column='remoteaccount_id')  # Originally: remoteaccount.id.
+    # Originally: remoteaccount.extra_data.
+    extra_data = JSONField()
+    # Originally: remoteaccount.id.
+    id = models.IntegerField(primary_key=True, db_column='remoteaccount_id')
+
+    objects = managers.OrcidIdentityManager()
 
     class Meta:
         managed = False

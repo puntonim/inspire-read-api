@@ -31,6 +31,8 @@ def unhealth(request):
 class LiteratureDetail(generics.RetrieveAPIView):
     """
     $ curl 127.0.0.1:8000/api/literature/335152/?fields-include=titles,control_number
+
+    Tests
     """
     serializer_class = serializers.RecordMetadataSerializer
     domain_model_class = LiteratureDetailDomain
@@ -96,7 +98,7 @@ class OrcidIdentitiesList(generics.ListAPIView):
      - author=xxxx
      - fields-extra=tokens
     """
-    serializer_class = serializers.UserIdentitySerializer
+    serializer_class = serializers.OrcidIdentitySerializer
     domain_model_class = OrcidIdentitiesListDomain
 
     def get_queryset(self, *args, **kwargs):

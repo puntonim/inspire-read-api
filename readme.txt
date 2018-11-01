@@ -65,6 +65,11 @@ Con UserIdentity e User 52921
 
 OPERAZIONI SU DB ISNPIRE
 =========================
+- Garantire permessi in lettura:
+# no need -- GRANT CONNECT ON DATABASE "inspirehep-prod-dump" TO "inspire-read-api";
+# no need -- GRANT USAGE ON SCHEMA public TO "inspire-read-api";
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO "inspire-read-api";
+
 - RemoteAccount.extra_data to JSONB:
 ALTER TABLE public.oauthclient_remoteaccount
     ALTER COLUMN extra_data SET DATA TYPE jsonb;
@@ -88,5 +93,9 @@ AS
     OR oauthclient_useridentity.method is NULL;
 
 Nota che alcuni hanno dati inconsistenti:
-remoteaccount_id=5888 non ha useridentity enon ha token
+remoteaccount_id=5888 non ha useridentity e non ha token
 ce ne sono 9 cosi
+
+Poi aggiungere ancora i permessi di select:
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO "inspire-read-api";
+

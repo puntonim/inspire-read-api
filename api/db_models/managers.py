@@ -80,10 +80,7 @@ class PidstorePidRegisteredManager(models.Manager):
         return super().get_queryset().filter(status=self.model.STATUS_REGISTERED)
 
 
-class UserIdentityOrcidsManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(method='orcid')
-
+class OrcidIdentityManager(models.Manager):
     def filter_by_authored_literature(self, pid_value):
         from .inspirehep import RecordMetadata
         record = RecordMetadata.literature_objects.get_by_pid(pid_value)

@@ -33,17 +33,17 @@ class AuthorEnclosed(utils.data.SmartgetDictMixin):
         return orcids[0]['value']
 
     @property
-    def has_orcid_user_identity(self):
-        return bool(self.orcid_user_identity)
+    def has_orcid_identity(self):
+        return bool(self.orcid_identity)
 
     @property
-    def orcid_user_identity(self):
+    def orcid_identity(self):
         """
-        Not all orcid_enclosed have a matching UserIdentity.
-        Typically there is a UserIdentity if the author has logged in in Legacy
-        or Labs with his ORCID.
+        Not all orcid_enclosed have a matching OrcidIdentity.
+        Typically there is a OrcidIdentity if the author has logged in in Legacy
+        or Labs with her ORCID.
         """
-        return self.record_metadata.json_model.orcid_user_identity
+        return self.record_metadata.json_model.orcid_identity
 
     @property
     def has_recid(self):
