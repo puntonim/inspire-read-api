@@ -6,9 +6,11 @@ from .settings_base import *
 
 
 DEBUG = True
+SECRET_KEY = 'secretkey'
 AUTH_PASSWORD_VALIDATORS = []
 ALLOWED_HOSTS = ['*']
 
+INSPIREHEP_DATABASE_NAME = 'inspire-prod-dump-20181101'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -23,10 +25,9 @@ DATABASES = {
     # no need -- GRANT CONNECT ON DATABASE "inspirehep-prod-dump" TO "inspire-read-api";
     # no need -- GRANT USAGE ON SCHEMA public TO "inspire-read-api";
     # GRANT SELECT ON ALL TABLES IN SCHEMA public TO "inspire-read-api";
-    'inspirehep': {
+    INSPIREHEP_DATABASE_NAME: {
         'ENGINE': 'django.db.backends.postgresql',
-        #'NAME': 'inspire-prod-dump-20181101',
-        'NAME': 'inspire-prod-dump-201804',
+        'NAME': INSPIREHEP_DATABASE_NAME,
         'USER': 'inspire-read-api',
         'PASSWORD': 'Password123',
     }

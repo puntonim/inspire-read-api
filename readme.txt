@@ -1,3 +1,16 @@
+INSPIRE UNMANAGED DB
+====================
+Per generare i modelli:
+$ ./manage.py inspectdb --database inspirehep > inspirehep.py
+Models with managed = False are ignored during `migrate` and
+`makemigrations`. But they are writable by a: Model.objets.create().
+To make them read only, we need a custom DATABASE_ROUTERS.
+
+We need a DATABASE_ROUTERS also in order to route to different database:
+- the one with django models (writable)
+- the one from inspire (read-only)
+
+
 RECORDS GRANDI
 ==============
 PROD DUMP DEL 2018.04
@@ -63,8 +76,8 @@ With orcid 0000-0001-9835-7128
 Con UserIdentity e User 52921
 
 
-OPERAZIONI SU DB ISNPIRE
-=========================
+OPERAZIONI SU DB INSPIRE
+========================
 - Garantire permessi in lettura:
 # no need -- GRANT CONNECT ON DATABASE "inspirehep-prod-dump" TO "inspire-read-api";
 # no need -- GRANT USAGE ON SCHEMA public TO "inspire-read-api";
@@ -93,8 +106,8 @@ AS
     OR oauthclient_useridentity.method is NULL;
 
 Nota che alcuni hanno dati inconsistenti:
-remoteaccount_id=5888 non ha useridentity e non ha token
-ce ne sono 9 cosi
+remoteaccount_id=5888 (user_id=55901) non ha useridentity e non ha token
+ce ne sono 12 cosi
 
 Poi aggiungere ancora i permessi di select:
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO "inspire-read-api";
