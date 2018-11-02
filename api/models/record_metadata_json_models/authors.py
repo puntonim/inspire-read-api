@@ -1,5 +1,6 @@
 """
-Author model encapsulate the logic to access RecordMetadata.json data for a authors.json $schema.
+AuthorJson model encapsulates the logic to access RecordMetadata.json data for
+a authors.json $schema.
 """
 import utils.data
 

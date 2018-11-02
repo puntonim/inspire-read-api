@@ -1,4 +1,4 @@
-from ..db_models.inspirehep import RecordMetadata, OrcidIdentity
+from ..models.inspirehep import RecordMetadata, OrcidIdentity
 
 from .query_params import QueryParamsParser
 from .record_metadata_base import (

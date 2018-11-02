@@ -3,7 +3,7 @@ from django.contrib.postgres.fields import JSONField
 
 from jsoneditor.forms import JSONEditor
 
-from .db_models import inspirehep
+from .models import inspirehep
 
 
 class RecordMetadataAdmin(admin.ModelAdmin):

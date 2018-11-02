@@ -25,6 +25,7 @@ DATABASES = {
     # no need -- GRANT CONNECT ON DATABASE "inspirehep-prod-dump" TO "inspire-read-api";
     # no need -- GRANT USAGE ON SCHEMA public TO "inspire-read-api";
     # GRANT SELECT ON ALL TABLES IN SCHEMA public TO "inspire-read-api";
+
     INSPIRE_DATABASE_KEY: {
         'ENGINE': 'django.db.backends.postgresql',
         #'NAME': 'inspire-prod-dump-201804',
@@ -35,8 +36,8 @@ DATABASES = {
 }
 
 
-DATABASE_ROUTERS = ['api.db_models.routers.InspirehepRouter',]
+DATABASE_ROUTERS = ['api.models.routers.InspirehepRouter',]
 ORCID_APP_CONSUMER_KEY = '0000-0001-8607-8906'
 
 MIGRATION_MODULES = {
-    'api': 'tests.api.db_models.migrations'}
+    'api': 'tests.api.models.migrations'}

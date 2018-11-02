@@ -61,6 +61,16 @@ https://docs.djangoproject.com/en/2.1/topics/db/multi-db/#database-routers
 https://docs.djangoproject.com/en/2.1/howto/legacy-databases/
 
 
+MODELS MODULE
+=============
+Django needs a models package or a models.py module.
+If you rename it to db_models or anything else, it seems to be working, but then
+suddenly you bump into strange cases fi. with migrations or dumpdata.
+$ manage dumpdata --format=json --indent=4 --database=inspire --indent=4 api.User
+does not work because it cannot find any model and silently prints an empty list.
+So keep the standarda naming convention!
+
+
 RECORD, AUTORI, TOKENS
 ======================
 - Senza token:

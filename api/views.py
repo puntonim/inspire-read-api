@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
 from . import serializers
-from .db_models.inspirehep import RecordMetadata
+from .models.inspirehep import RecordMetadata
 from .domain_models.literature import LiteratureDetailDomain
 from .domain_models.authors import AuthorDetailDomain, AuthorsListDomain
 from .domain_models.orcids import OrcidIdentitiesListDomain

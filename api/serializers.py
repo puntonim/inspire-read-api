@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .db_models.inspirehep import RecordMetadata, OrcidIdentity
+from .models.inspirehep import RecordMetadata, OrcidIdentity
 
 # TODO consider serpy to speed up the serialization:
 # https://github.com/clarkduvall/serpy

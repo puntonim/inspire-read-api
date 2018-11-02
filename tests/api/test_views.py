@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from api.db_models.inspirehep import User
+from api.models.inspirehep import User
 
 
 class AnimalTestCase(TestCase):

@@ -1,5 +1,6 @@
 """
-Hep model encapsulate the logic to access RecordMetadata.json data for a hep.json $schema.
+HepJson model encapsulates the logic to access RecordMetadata.json data for
+a hep.json $schema.
 """
 import utils.data
 

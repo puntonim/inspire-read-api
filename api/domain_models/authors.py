@@ -1,4 +1,4 @@
-from ..db_models.inspirehep import RecordMetadata
+from ..models.inspirehep import RecordMetadata
 
 from .record_metadata_base import (
     RecordMetadataDetailDomainBase, RecordMetadataListDomainBase)
