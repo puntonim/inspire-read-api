@@ -71,6 +71,22 @@ does not work because it cannot find any model and silently prints an empty list
 So keep the standarda naming convention!
 
 
+FIXTURES
+========
+To create fixtures use as template the examples in tests/fixtures_examples.
+In order to generate new fixtures from the db, you need some tricks.
+- If your db is too bid and you want to dump only a few data, override the default
+custom manager this way:
+  class RecordMetadataManager(models.Manager):
+      def get_queryset(self):
+          record_ids = super().get_queryset()[:100].values('id')
+          # You cannot slice directly this because later on dumpdata will
+          # sort it (and sorting a sliced queryset is forbidden).
+          return super().get_queryset().filter(id__in=record_ids)
+Then:
+$ manage dumpdata --format=json --indent=4 --database=inspire --indent=4 -v 3 --traceback api.RecordMetadata > recs.json
+
+
 RECORD, AUTORI, TOKENS
 ======================
 - Senza token:

@@ -1,0 +1,16 @@
+[
+{
+    "model": "api.pidstorepid",
+    "pk": 1,
+    "fields": {
+        "created": "2017-03-16T13:13:37.917",
+        "updated": "2017-03-16T13:13:37.917",
+        "pid_type": "lit",
+        "pid_value": "7777",
+        "pid_provider": null,
+        "status": "R",
+        "object_type": "rec",
+        "object_uuid": "7efea412-f754-41e4-b683-4c56f0fc6e08"
+    }
+}
+]

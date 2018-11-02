@@ -177,9 +177,6 @@ class User(models.Model):
         return self.orcididentity_set.get(client_id=settings.ORCID_APP_CONSUMER_KEY)
 
 
-
-
-
 # class UserIdentity(models.Model):
 #     id = models.CharField(primary_key=True, max_length=255)
 #     method = models.CharField(max_length=255)

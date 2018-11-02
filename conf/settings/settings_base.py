@@ -138,7 +138,7 @@ JSON_EDITOR_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.24.7/json
 JSON_EDITOR_JS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.24.7/jsoneditor.min.js'
 
 
-# DJANGO REST FRAMEWROK
+# DJANGO REST FRAMEWORK.
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -148,3 +148,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 100,
 }
+
+# Inspire's app key for ORCID OAuth API service.
+ORCID_APP_CONSUMER_KEY = '0000-0001-8607-8906'
+
+# Migrations are only used in tests, thus move them to the test module.
+MIGRATION_MODULES = {
+    'api': 'tests.api.models.migrations'}

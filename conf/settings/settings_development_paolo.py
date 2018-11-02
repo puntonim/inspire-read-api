@@ -10,7 +10,7 @@ SECRET_KEY = 'secretkey'
 AUTH_PASSWORD_VALIDATORS = []
 ALLOWED_HOSTS = ['*']
 
-INSPIRE_DATABASE_KEY = 'inspire'
+INSPIRE_DATABASE_KEY = 'inspirehep'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -37,7 +37,3 @@ DATABASES = {
 
 
 DATABASE_ROUTERS = ['api.models.routers.InspirehepRouter',]
-ORCID_APP_CONSUMER_KEY = '0000-0001-8607-8906'
-
-MIGRATION_MODULES = {
-    'api': 'tests.api.models.migrations'}

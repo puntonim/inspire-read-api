@@ -1,0 +1,45 @@
+[
+{
+    "model": "api.orcididentity",
+    "pk": 8,
+    "fields": {
+        "orcid_value": "0000-0001-8646-6036",
+        "useridentity_user_id": 50003,
+        "user": 50003,
+        "client_id": "0000-0001-8607-8906",
+        "extra_data": {
+            "orcid": "0000-0001-8646-6036",
+            "allow_push": false
+        }
+    }
+},
+{
+    "model": "api.orcididentity",
+    "pk": 9,
+    "fields": {
+        "orcid_value": "0000-0002-4133-3528",
+        "useridentity_user_id": 50004,
+        "user": 50004,
+        "client_id": "0000-0001-8607-8906",
+        "extra_data": {
+            "orcid": "0000-0002-4133-3528",
+            "allow_push": true
+        }
+    }
+},
+{
+    "model": "api.orcididentity",
+    "pk": 10672,
+    "fields": {
+        "orcid_value": "0000-0002-2985-4726",
+        "useridentity_user_id": 60713,
+        "user": 60713,
+        "client_id": "0000-0001-8607-8906",
+        "extra_data": {
+            "orcid": "0000-0002-2985-4726",
+            "full_name": "Jane Doe",
+            "allow_push": true
+        }
+    }
+}
+]

@@ -1,0 +1,30 @@
+[
+{
+    "model": "api.pidstorepid",
+    "pk": 1,
+    "fields": {
+        "created": "2017-03-16T13:13:37.917",
+        "updated": "2017-03-16T13:13:37.917",
+        "pid_type": "lit",
+        "pid_value": "964117",
+        "pid_provider": null,
+        "status": "R",
+        "object_type": "rec",
+        "object_uuid": "7efea412-f754-41e4-b683-4c56f0fc6e08"
+    }
+},
+{
+    "model": "api.pidstorepid",
+    "pk": 2,
+    "fields": {
+        "created": "2017-03-16T13:13:38.391",
+        "updated": "2017-03-16T13:13:38.391",
+        "pid_type": "aut",
+        "pid_value": "964017",
+        "pid_provider": null,
+        "status": "R",
+        "object_type": "rec",
+        "object_uuid": "d41fe50d-3907-427c-a243-c40b56350e49"
+    }
+}
+]
