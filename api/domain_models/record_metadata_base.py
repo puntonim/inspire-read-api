@@ -1,3 +1,4 @@
+from . import exceptions
 from ..models.inspirehep import RecordMetadata
 from .query_params import QueryParamsParser
 
@@ -19,7 +20,12 @@ class RecordMetadataDetailDomainBase:
         self.query_params_parser = QueryParamsParser(query_params)
 
     def get_object(self):
-        return RecordMetadata.objects.get_by_pid(self.pid_value)
+        try:
+            return RecordMetadata.objects.get_by_pid(self.pid_value)
+        except RecordMetadata.DoesNotExist as exc:
+            msg = 'RecordMetadata with pid_type=lit and pid_value={} and' \
+                  ' pid_status=R does not exist'.format(self.pid_value)
+            raise exceptions.RecordMetadataDoesNotExist(msg) from exc
 
     def get_data(self):
         record = self.get_object()

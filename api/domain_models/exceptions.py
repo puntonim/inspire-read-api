@@ -1,0 +1,3 @@
+
+class RecordMetadataDoesNotExist(Exception):
+    pass

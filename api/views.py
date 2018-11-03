@@ -3,15 +3,16 @@ from django.utils import timezone
 
 from rest_framework import mixins, generics, permissions, viewsets, renderers, views
 from rest_framework.decorators import api_view, detail_route
+from rest_framework.exceptions import NotFound
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
 from . import serializers
-from .models.inspirehep import RecordMetadata
 from .domain_models.literature import LiteratureDetailDomain
 from .domain_models.authors import AuthorDetailDomain, AuthorsListDomain
 from .domain_models.orcids import OrcidIdentitiesListDomain
+from .domain_models import exceptions as domain_exceptions
 
 
 def health(request):
@@ -44,8 +45,8 @@ class LiteratureDetail(generics.RetrieveAPIView):
         )
         try:
             data = domain.get_data()
-        except Exception:  # TODO catch domains exceptions
-            raise
+        except domain_exceptions.RecordMetadataDoesNotExist:
+            raise NotFound
         serializer = self.get_serializer(data)
         return Response(serializer.data)
 
