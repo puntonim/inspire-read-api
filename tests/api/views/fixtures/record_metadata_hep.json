@@ -1,7 +1,7 @@
 [
 {
     "model": "api.recordmetadata",
-    "pk": "7efea412-f754-41e4-b683-4c56f0fc6e08",
+    "pk": "7777a412-f754-41e4-b683-4c56f0fc6e08",
     "fields": {
         "created": "2010-01-12T00:00:00",
         "updated": "2018-10-13T00:50:51.194",
@@ -179,6 +179,23 @@
                     "schema": "SPIRES"
                 }
             ]
+        },
+        "version_id": 23
+    }
+},
+{
+    "model": "api.recordmetadata",
+    "pk": "7778a412-f754-41e4-b683-4c56f0fc6e08",
+    "fields": {
+        "created": "2010-01-12T00:00:00",
+        "updated": "2018-10-13T00:50:51.194",
+        "json": {
+            "dois": [
+                {
+                    "value": "10.1111/j.1365-2966.2010.16335.x"
+                }
+            ],
+            "control_number": 7778
         },
         "version_id": 23
     }

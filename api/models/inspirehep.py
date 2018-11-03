@@ -235,10 +235,10 @@ class OrcidIdentity(models.Model):
     # TODO nota che ci sono 9 remoteacc senza userid, quindi il `orcid_value`
     # e' null, quindi forse qs cambo deve essere nullable. O meglio lanciare un
     # eccezione.
+    # Originally: remoteaccount.id.
+    id = models.IntegerField(primary_key=True, db_column='remoteaccount_id')
     # Originally: useridentity.id.
     orcid_value = models.CharField(unique=True, max_length=255)
-    ##### Originally: remoteaccount.user_id.
-    ###remoteaccount_user_id = models.IntegerField(unique=True)
     # Originally: useridentity.id_user.
     useridentity_user_id = models.IntegerField(unique=True)
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='remoteaccount_user_id')
@@ -246,8 +246,6 @@ class OrcidIdentity(models.Model):
     client_id = models.CharField(max_length=255)  # Inspire APP's ORCID.
     # Originally: remoteaccount.extra_data.
     extra_data = JSONField()
-    # Originally: remoteaccount.id.
-    id = models.IntegerField(primary_key=True, db_column='remoteaccount_id')
 
     objects = managers.OrcidIdentityManager()
 

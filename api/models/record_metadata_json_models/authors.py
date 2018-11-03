@@ -24,7 +24,7 @@ class AuthorJson(utils.data.SmartgetDictMixin):
         return bool(self.orcid_identity)
 
     @property
-    def orcid_user_identity(self):
+    def orcid_identity(self):
         """
         Not all orcid_embedded have a matching OrcidIdentity.
         Typically there is a OrcidIdentity if the author has logged in in Legacy
