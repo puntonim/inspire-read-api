@@ -15,16 +15,17 @@ def filter_record_json_by_fields(record, fields_include):
 
 
 class RecordMetadataDetailDomainBase:
-    def __init__(self, pid_value, query_params):
+    def __init__(self, pid_type, pid_value, query_params):
+        self.pid_type = pid_type
         self.pid_value = pid_value
         self.query_params_parser = QueryParamsParser(query_params)
 
     def get_object(self):
         try:
-            return RecordMetadata.objects.get_by_pid(self.pid_value)
+            return RecordMetadata.objects.get_by_pid(self.pid_value, self.pid_type)
         except RecordMetadata.DoesNotExist as exc:
-            msg = 'RecordMetadata with pid_type=lit and pid_value={} and' \
-                  ' pid_status=R does not exist'.format(self.pid_value)
+            msg = 'RecordMetadata with pid_type={} and pid_value={} and' \
+                  ' pid_status=R does not exist'.format(self.pid_type, self.pid_value)
             raise exceptions.RecordMetadataDoesNotExist(msg) from exc
 
     def get_data(self):

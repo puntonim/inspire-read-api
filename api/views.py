@@ -9,8 +9,8 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
 from . import serializers
-from .domain_models.literature import LiteratureDetailDomain
-from .domain_models.authors import AuthorDetailDomain, AuthorsListDomain
+from .domain_models.record_metadata_base import RecordMetadataDetailDomainBase
+from .domain_models.authors import AuthorsListDomain
 from .domain_models.orcids import OrcidIdentitiesListDomain
 from .domain_models import exceptions as domain_exceptions
 
@@ -36,10 +36,12 @@ class LiteratureDetail(generics.RetrieveAPIView):
     Tests
     """
     serializer_class = serializers.RecordMetadataSerializer
-    domain_model_class = LiteratureDetailDomain
+    domain_model_class = RecordMetadataDetailDomainBase
+    pid_type = 'lit'
 
     def retrieve(self, request, *args, **kwargs):
         domain = self.domain_model_class(
+            pid_type=self.pid_type,
             pid_value=self.kwargs['pid_value'],
             query_params=request.query_params
         )
@@ -62,7 +64,8 @@ class AuthorDetail(LiteratureDetail):
     """
     $ curl 127.0.0.1:8000/api/authors/1607170/?fields-include=name,deleted
     """
-    domain_model_class = AuthorDetailDomain
+    #domain_model_class = AuthorDetailDomain
+    pid_type = 'aut'
 
 
 # TODO: manage records_metadata.json['deleted'] == True?

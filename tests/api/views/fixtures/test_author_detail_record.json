@@ -1,7 +1,7 @@
 [
 {
     "model": "api.recordmetadata",
-    "pk": "01d74a01-dd7f-4034-ad6a-cb1b7e1a6bef",
+    "pk": "77774a01-dd7f-4034-ad6a-cb1b7e1a6bef",
     "fields": {
         "created": "2018-01-30T00:00:00",
         "updated": "2018-10-13T06:36:28.315",
@@ -47,7 +47,7 @@
             "_collections": [
                 "Authors"
             ],
-            "control_number": 1651090,
+            "control_number": 7777,
             "legacy_version": "20180131233509.0",
             "arxiv_categories": [
                 "physics.acc-ph"
@@ -67,7 +67,7 @@
 
 {
     "model": "api.recordmetadata",
-    "pk": "05292315-6e91-4c6e-b4e9-1f199bc6c66d",
+    "pk": "77782315-6e91-4c6e-b4e9-1f199bc6c66d",
     "fields": {
         "created": "2013-01-14T00:00:00",
         "updated": "2018-10-13T03:43:06.088",
@@ -108,7 +108,7 @@
             "_collections": [
                 "Authors"
             ],
-            "control_number": 1210716,
+            "control_number": 7778,
             "legacy_version": "20150923150746.0",
             "email_addresses": [
                 {
