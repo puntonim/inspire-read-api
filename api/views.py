@@ -73,7 +73,7 @@ class AuthorDetail(LiteratureDetail):
 
 class AuthorsList(generics.ListAPIView):
     """
-    $ curl "127.0.0.1:8000/api/authors/?literature=335152&fields-include=name"
+    $ curl "127.0.0.1:8000/api/authors/?literature=335152&fields-include=name,ids"
     """
     serializer_class = serializers.RecordMetadataSerializer
     domain_model_class = AuthorsListDomain

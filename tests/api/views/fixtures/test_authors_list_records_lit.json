@@ -1,7 +1,7 @@
 [
 {
     "model": "api.recordmetadata",
-    "pk": "7777a412-f754-41e4-b683-4c56f0fc6e08",
+    "pk": "6666a412-f754-41e4-b683-4c56f0fc6e08",
     "fields": {
         "created": "2010-01-12T00:00:00",
         "updated": "2018-10-13T00:50:51.194",
@@ -28,29 +28,48 @@
                 {
                     "ids": [
                         {
-                            "value": "K.L.Masters.1",
+                            "value": "M.Maciejewski.1",
                             "schema": "INSPIRE BAI"
                         }
                     ],
                     "uuid": "0fdff9b4-9a5c-4f63-8f42-5047b5e89d00",
                     "record": {
-                        "$ref": "http://labs.inspirehep.net/api/authors/1037997"
+                        "$ref": "http://labs.inspirehep.net/api/authors/7777"
                     },
-                    "full_name": "Masters, Karen L.",
+                    "value": "Maciejewski, Micha\u0142",
                     "signature_block": "MASTARk"
                 },
                 {
                     "ids": [
                         {
-                            "value": "Daniel.B.Thomas.1",
-                            "schema": "INSPIRE BAI"
+                            "value": "INSPIRE-00365761",
+                            "schema": "INSPIRE ID"
                         }
                     ],
                     "uuid": "88c55e35-3897-4e67-b9c6-9ea9fbfaa008",
                     "record": {
-                        "$ref": "http://labs.inspirehep.net/api/authors/1346595"
+                        "$ref": "http://labs.inspirehep.net/api/authors/7778"
                     },
-                    "full_name": "Thomas, Daniel",
+                    "value": "Hwang, Myung-Jin",
+                    "signature_block": "TANd",
+                    "curated_relation": true
+                },
+                {
+                    "ids": [
+                    ],
+                    "uuid": "88c55e35-3897-4e67-b9c6-9ea9fbfaa008",
+                    "value": "AuthorNoRecord, norec",
+                    "signature_block": "TANd",
+                    "curated_relation": true
+                },
+                {
+                    "ids": [
+                    ],
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/authors/7779"
+                    },
+                    "uuid": "88c55e35-3897-4e67-b9c6-9ea9fbfaa008",
+                    "value": "AuthorPidNonRegistered, noreg",
                     "signature_block": "TANd",
                     "curated_relation": true
                 }
@@ -144,7 +163,7 @@
                     "source": "CERN"
                 }
             ],
-            "control_number": 7777,
+            "control_number": 6666,
             "legacy_version": "20170220224612.0",
             "number_of_pages": 25,
             "publication_info": [
@@ -183,9 +202,13 @@
         "version_id": 23
     }
 },
+
+
+
+
 {
     "model": "api.recordmetadata",
-    "pk": "7778a412-f754-41e4-b683-4c56f0fc6e08",
+    "pk": "6667a412-f754-41e4-b683-4c56f0fc6e08",
     "fields": {
         "created": "2010-01-12T00:00:00",
         "updated": "2018-10-13T00:50:51.194",
@@ -195,7 +218,28 @@
                     "value": "10.1111/j.1365-2966.2010.16335.x"
                 }
             ],
-            "control_number": 7778
+            "control_number": 6667
+        },
+        "version_id": 23
+    }
+},
+
+
+
+
+{
+    "model": "api.recordmetadata",
+    "pk": "6668a412-f754-41e4-b683-4c56f0fc6e08",
+    "fields": {
+        "created": "2010-01-12T00:00:00",
+        "updated": "2018-10-13T00:50:51.194",
+        "json": {
+            "dois": [
+                {
+                    "value": "10.1111/j.1365-2966.2010.16335.x"
+                }
+            ],
+            "control_number": 6668
         },
         "version_id": 23
     }

@@ -3,10 +3,21 @@ from django.test import TestCase
 from api.models.inspirehep import RecordMetadata
 
 
+def assertRecordMetadataEqual(serialized, record_metadata_instance):
+    t = TestCase()
+    t.assertDictEqual(serialized['json'], record_metadata_instance.json)
+    t.assertEquals(serialized['id'], str(record_metadata_instance.id))
+    t.assertEquals(serialized['created'].split('Z')[0],
+                   record_metadata_instance.created.isoformat().split('+')[0])
+    t.assertEquals(serialized['updated'].split('Z')[0],
+                   record_metadata_instance.updated.isoformat().split('+')[0])
+    t.assertEquals(serialized['version_id'], record_metadata_instance.version_id)
+
+
 class TestGenericFieldsInclude(TestCase):
     fixtures = (
-        'tests/api/views/fixtures/test_literature_detail_record.json',
-        'tests/api/views/fixtures/test_literature_detail_pid.json',
+        'tests/api/views/fixtures/test_literature_detail_records.json',
+        'tests/api/views/fixtures/test_literature_detail_pids.json',
     )
 
     def setUp(self, **kwargs):
@@ -53,8 +64,8 @@ class TestGenericFieldsInclude(TestCase):
 
 class TestLiteratureDetail(TestCase):
     fixtures = (
-        'tests/api/views/fixtures/test_literature_detail_record.json',
-        'tests/api/views/fixtures/test_literature_detail_pid.json',
+        'tests/api/views/fixtures/test_literature_detail_records.json',
+        'tests/api/views/fixtures/test_literature_detail_pids.json',
     )
 
     def setUp(self, **kwargs):
@@ -65,7 +76,12 @@ class TestLiteratureDetail(TestCase):
         response = self.client.get(self.base_url)
         self.assertEquals(response.status_code, 200)
         rec = RecordMetadata.literature_objects.get_by_pid(self.pid_value)
-        self.assertDictEqual(response.json()['json'], rec.json)
+        assertRecordMetadataEqual(response.json(), rec)
+
+    def test_get_pid_non_registered(self):
+        base_url = '/api/literature/9999/'
+        response = self.client.get(base_url)
+        self.assertEquals(response.status_code, 404)
 
     def test_get_404(self):
         response = self.client.get('/api/literature/00000/')
@@ -74,8 +90,8 @@ class TestLiteratureDetail(TestCase):
 
 class TestAuthorDetail(TestCase):
     fixtures = (
-        'tests/api/views/fixtures/test_author_detail_record.json',
-        'tests/api/views/fixtures/test_author_detail_pid.json',
+        'tests/api/views/fixtures/test_author_detail_records.json',
+        'tests/api/views/fixtures/test_author_detail_pids.json',
     )
 
     def setUp(self, **kwargs):
@@ -86,8 +102,57 @@ class TestAuthorDetail(TestCase):
         response = self.client.get(self.base_url)
         self.assertEquals(response.status_code, 200)
         rec = RecordMetadata.author_objects.get_by_pid(self.pid_value)
-        self.assertDictEqual(response.json()['json'], rec.json)
+        assertRecordMetadataEqual(response.json(), rec)
+
+    def test_get_pid_non_registered(self):
+        base_url = '/api/authors/9999/'
+        response = self.client.get(base_url)
+        self.assertEquals(response.status_code, 404)
 
     def test_get_404(self):
         response = self.client.get('/api/literature/00000/')
         self.assertEquals(response.status_code, 404)
+
+
+class TestGenericPagination(TestCase):
+    # TODO
+    # test that more than 100 results make up 2 pages with proper next param
+    pass
+
+
+class TestAuthorsList(TestCase):
+    fixtures = (
+        'tests/api/views/fixtures/test_authors_list_records_lit.json',
+        'tests/api/views/fixtures/test_authors_list_records_aut.json',
+        'tests/api/views/fixtures/test_authors_list_pids.json',
+    )
+
+    def setUp(self, **kwargs):
+        self.base_url = '/api/authors/'
+
+    def test_get(self):
+        response = self.client.get(self.base_url)
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 2)
+        recs = RecordMetadata.author_objects.all().order_by('id')
+        for i, rec in enumerate(recs):
+            assertRecordMetadataEqual(response.json()['results'][i], rec)
+
+    def test_literature(self):
+        lit_pid_value = 6666
+        query_params = 'literature={}'.format(lit_pid_value)
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 2)
+        recs = RecordMetadata.author_objects.filter_by_pids([7777, 7778]).order_by('id')
+        for i, rec in enumerate(recs):
+            assertRecordMetadataEqual(response.json()['results'][i], rec)
+
+    def test_literature_nonexistent(self):
+        lit_pid_value = 1
+        query_params = 'literature={}'.format(lit_pid_value)
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 0)
+        self.assertListEqual(response.json()['results'], [])
+

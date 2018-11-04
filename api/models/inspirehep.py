@@ -42,6 +42,7 @@ class PidstorePid(models.Model):
         (TYPE_INS, 'institutions.json'),
         (TYPE_CON, 'conferences.json'),
     )
+
     id = models.IntegerField(primary_key=True)
     created = models.DateTimeField()
     updated = models.DateTimeField()

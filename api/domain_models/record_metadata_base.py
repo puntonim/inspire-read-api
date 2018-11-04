@@ -25,7 +25,7 @@ class RecordMetadataDetailDomainBase:
             return RecordMetadata.objects.get_by_pid(self.pid_value, self.pid_type)
         except RecordMetadata.DoesNotExist as exc:
             msg = 'RecordMetadata with pid_type={} and pid_value={} and' \
-                  ' pid_status=R does not exist'.format(self.pid_type, self.pid_value)
+                  ' status=R does not exist'.format(self.pid_type, self.pid_value)
             raise exceptions.RecordMetadataDoesNotExist(msg) from exc
 
     def get_data(self):

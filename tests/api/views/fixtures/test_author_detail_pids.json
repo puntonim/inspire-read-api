@@ -13,6 +13,8 @@
         "object_uuid": "77774a01-dd7f-4034-ad6a-cb1b7e1a6bef"
     }
 },
+
+
 {
     "model": "api.pidstorepid",
     "pk": 2,
@@ -25,6 +27,22 @@
         "status": "R",
         "object_type": "rec",
         "object_uuid": "77782315-6e91-4c6e-b4e9-1f199bc6c66d"
+    }
+},
+
+
+{
+    "model": "api.pidstorepid",
+    "pk": 3,
+    "fields": {
+        "created": "2017-03-16T13:13:37.917",
+        "updated": "2017-03-16T13:13:37.917",
+        "pid_type": "aut",
+        "pid_value": "9999",
+        "pid_provider": null,
+        "status": "N",
+        "object_type": "rec",
+        "object_uuid": "99992315-6e91-4c6e-b4e9-1f199bc6c66d"
     }
 }
 ]

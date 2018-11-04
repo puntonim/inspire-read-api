@@ -13,7 +13,9 @@ class OrcidIdentitiesListDomain(RecordMetadataListDomainBase):
         # Query filters.
         literature_recid = self.query_params_parser.literature
         if literature_recid:
-            queryset = OrcidIdentity.objects.filter_by_authored_literature(literature_recid)
+            queryset = OrcidIdentity.objects\
+                .filter_by_authored_literature(literature_recid)\
+                .order_by('id')
         else:
-            queryset = OrcidIdentity.objects.all()
+            queryset = OrcidIdentity.objects.all().order_by('id')
         return queryset

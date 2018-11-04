@@ -13,18 +13,36 @@
         "object_uuid": "7777a412-f754-41e4-b683-4c56f0fc6e08"
     }
 },
-{
+
+
+  {
     "model": "api.pidstorepid",
     "pk": 2,
+    "fields": {
+      "created": "2017-03-16T13:13:37.917",
+      "updated": "2017-03-16T13:13:37.917",
+      "pid_type": "lit",
+      "pid_value": "7778",
+      "pid_provider": null,
+      "status": "R",
+      "object_type": "rec",
+      "object_uuid": "7778a412-f754-41e4-b683-4c56f0fc6e08"
+    }
+},
+
+
+  {
+    "model": "api.pidstorepid",
+    "pk": 3,
     "fields": {
         "created": "2017-03-16T13:13:37.917",
         "updated": "2017-03-16T13:13:37.917",
         "pid_type": "lit",
-        "pid_value": "7778",
+        "pid_value": "9999",
         "pid_provider": null,
-        "status": "R",
+        "status": "K",
         "object_type": "rec",
-        "object_uuid": "7778a412-f754-41e4-b683-4c56f0fc6e08"
+        "object_uuid": "9999a412-f754-41e4-b683-4c56f0fc6e08"
     }
 }
 ]

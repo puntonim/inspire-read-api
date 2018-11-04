@@ -130,5 +130,74 @@
         },
         "version_id": 22
     }
+},
+
+
+
+{
+    "model": "api.recordmetadata",
+    "pk": "99992315-6e91-4c6e-b4e9-1f199bc6c66d",
+    "fields": {
+        "created": "2013-01-14T00:00:00",
+        "updated": "2018-10-13T03:43:06.088",
+        "json": {
+            "ids": [
+                {
+                    "value": "INSPIRE-00365761",
+                    "schema": "INSPIRE ID"
+                },
+                {
+                    "value": "HEPNAMES-1113712",
+                    "schema": "SPIRES"
+                }
+            ],
+            "name": {
+                "value": "Hwang, Myung-Jin",
+                "name_variants": [
+                    "Hwang, Myungjim"
+                ],
+                "preferred_name": "Myung-Jin Hwang"
+            },
+            "self": {
+                "$ref": "http://labs.inspirehep.net/api/authors/1210716"
+            },
+            "stub": false,
+            "$schema": "https://labs.inspirehep.net/schemas/records/authors.json",
+            "deleted": false,
+            "positions": [
+                {
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/institutions/903829"
+                    },
+                    "current": true,
+                    "institution": "Yonsei U.",
+                    "curated_relation": true
+                }
+            ],
+            "_collections": [
+                "Authors"
+            ],
+            "control_number": 9999,
+            "legacy_version": "20150923150746.0",
+            "email_addresses": [
+                {
+                    "value": "ichwang@hep2.yonsei.ac.kr",
+                    "current": true
+                }
+            ],
+            "project_membership": [
+                {
+                    "name": "KEK-BF-BELLE",
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/experiments/1108579"
+                    },
+                    "current": false,
+                    "curated_relation": true
+                }
+            ],
+            "legacy_creation_date": "2013-01-14"
+        },
+        "version_id": 22
+    }
 }
 ]
