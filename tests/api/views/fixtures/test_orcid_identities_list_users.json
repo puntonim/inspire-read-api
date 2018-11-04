@@ -1,0 +1,62 @@
+[
+{
+    "model": "api.user",
+    "pk": 50003,
+    "fields": {
+        "email": "john.doe@cern.ch",
+        "password": "$invenio-aes$john.doe@cern.ch$dc2d8a22fd50cf540690",
+        "active": true,
+        "confirmed_at": "2017-03-16T15:10:27.334",
+        "last_login_at": "1899-12-31T23:09:21",
+        "current_login_at": null,
+        "last_login_ip": null,
+        "current_login_ip": null,
+        "login_count": null
+    }
+},
+{
+    "model": "api.user",
+    "pk": 50004,
+    "fields": {
+        "email": "phdoe@iiti.ac.in",
+        "password": null,
+        "active": true,
+        "confirmed_at": null,
+        "last_login_at": "2018-08-13T19:12:56.046",
+        "current_login_at": "2018-08-23T19:05:23.661",
+        "last_login_ip": "127.0.0.1",
+        "current_login_ip": "127.0.0.1",
+        "login_count": 3
+    }
+},
+{
+    "model": "api.user",
+    "pk": 50005,
+    "fields": {
+        "email": "jane.doe@cern.ch",
+        "password": null,
+        "active": null,
+        "confirmed_at": null,
+        "last_login_at": null,
+        "current_login_at": null,
+        "last_login_ip": null,
+        "current_login_ip": null,
+        "login_count": null
+    }
+},
+{
+    "model": "api.user",
+    "pk": 50006,
+    "fields": {
+        "email": "jane.doe2@cern.ch",
+        "password": null,
+        "active": null,
+        "confirmed_at": null,
+        "last_login_at": null,
+        "current_login_at": null,
+        "last_login_ip": null,
+        "current_login_ip": null,
+        "login_count": null
+    }
+}
+]

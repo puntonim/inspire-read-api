@@ -1,0 +1,60 @@
+[
+{
+    "model": "api.orcididentity",
+    "pk": 1,
+    "fields": {
+        "orcid_value": "0000-0001-5498-9174",
+        "useridentity_user_id": 50003,
+        "user": 50003,
+        "client_id": "0000-0001-8607-8906",
+        "extra_data": {
+            "orcid": "0000-0001-5498-9174",
+            "allow_push": false
+        }
+    }
+},
+{
+    "model": "api.orcididentity",
+    "pk": 2,
+    "fields": {
+        "orcid_value": "0000-0002-4133-3528",
+        "useridentity_user_id": 50004,
+        "user": 50004,
+        "client_id": "0000-0001-8607-8906",
+        "extra_data": {
+            "orcid": "0000-0002-4133-3528",
+            "allow_push": true
+        }
+    }
+},
+{
+    "model": "api.orcididentity",
+    "pk": 3,
+    "fields": {
+        "orcid_value": "0000-0001-5498-9988",
+        "useridentity_user_id": 50005,
+        "user": 50005,
+        "client_id": "0000-0001-8607-8906",
+        "extra_data": {
+            "orcid": "0000-0001-5498-9988",
+            "full_name": "Jane Doe",
+            "allow_push": true
+        }
+    }
+},
+{
+    "model": "api.orcididentity",
+    "pk": 4,
+    "fields": {
+        "orcid_value": "0000-0001-5498-9980",
+        "useridentity_user_id": 50006,
+        "user": 50006,
+        "client_id": "0000-0001-8607-8906",
+        "extra_data": {
+            "orcid": "0000-0001-5498-9980",
+            "full_name": "Jane Doe",
+            "allow_push": true
+        }
+    }
+}
+]

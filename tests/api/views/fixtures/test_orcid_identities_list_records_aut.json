@@ -1,0 +1,324 @@
+[
+{
+    "model": "api.recordmetadata",
+    "pk": "77774a01-dd7f-4034-ad6a-cb1b7e1a6bef",
+    "fields": {
+        "created": "2018-01-30T00:00:00",
+        "updated": "2018-10-13T06:36:28.315",
+        "json": {
+            "ids": [
+                {
+                    "value": "M.Maciejewski.1",
+                    "schema": "INSPIRE BAI"
+                },
+                {
+                    "value": "0000-0001-5498-9174",
+                    "schema": "ORCID"
+                }
+            ],
+            "name": {
+                "value": "Maciejewski, Micha\u0142",
+                "preferred_name": "Micha\u0142 Maciejewski"
+            },
+            "self": {
+                "$ref": "http://labs.inspirehep.net/api/authors/1651090"
+            },
+            "stub": false,
+            "status": "active",
+            "$schema": "https://labs.inspirehep.net/schemas/records/authors.json",
+            "deleted": false,
+            "positions": [
+                {
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/institutions/902725"
+                    },
+                    "current": true,
+                    "institution": "CERN",
+                    "curated_relation": true
+                },
+                {
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/institutions/904762"
+                    },
+                    "institution": "Lodz, Tech. U.",
+                    "curated_relation": true
+                }
+            ],
+            "_collections": [
+                "Authors"
+            ],
+            "control_number": 7777,
+            "legacy_version": "20180131233509.0",
+            "arxiv_categories": [
+                "physics.acc-ph"
+            ],
+            "legacy_creation_date": "2018-01-30"
+        },
+        "version_id": 20
+    }
+},
+
+
+
+
+
+
+
+
+{
+    "model": "api.recordmetadata",
+    "pk": "77782315-6e91-4c6e-b4e9-1f199bc6c66d",
+    "fields": {
+        "created": "2013-01-14T00:00:00",
+        "updated": "2018-10-13T03:43:06.088",
+        "json": {
+            "ids": [
+                {
+                    "value": "INSPIRE-00365761",
+                    "schema": "INSPIRE ID"
+                },
+                {
+                    "value": "HEPNAMES-1113712",
+                    "schema": "SPIRES"
+                }
+            ],
+            "name": {
+                "value": "Hwang, Myung-Jin",
+                "name_variants": [
+                    "Hwang, Myungjim"
+                ],
+                "preferred_name": "Myung-Jin Hwang"
+            },
+            "self": {
+                "$ref": "http://labs.inspirehep.net/api/authors/1210716"
+            },
+            "stub": false,
+            "$schema": "https://labs.inspirehep.net/schemas/records/authors.json",
+            "deleted": false,
+            "positions": [
+                {
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/institutions/903829"
+                    },
+                    "current": true,
+                    "institution": "Yonsei U.",
+                    "curated_relation": true
+                }
+            ],
+            "_collections": [
+                "Authors"
+            ],
+            "control_number": 7778,
+            "legacy_version": "20150923150746.0",
+            "email_addresses": [
+                {
+                    "value": "ichwang@hep2.yonsei.ac.kr",
+                    "current": true
+                }
+            ],
+            "project_membership": [
+                {
+                    "name": "KEK-BF-BELLE",
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/experiments/1108579"
+                    },
+                    "current": false,
+                    "curated_relation": true
+                }
+            ],
+            "legacy_creation_date": "2013-01-14"
+        },
+        "version_id": 22
+    }
+},
+
+
+
+
+
+
+
+
+{
+    "model": "api.recordmetadata",
+    "pk": "77792315-6e91-4c6e-b4e9-1f199bc6c66d",
+    "fields": {
+        "created": "2013-01-14T00:00:00",
+        "updated": "2018-10-13T03:43:06.088",
+        "json": {
+            "ids": [
+                {
+                    "value": "INSPIRE-00365761",
+                    "schema": "INSPIRE ID"
+                },
+                {
+                    "value": "HEPNAMES-1113712",
+                    "schema": "SPIRES"
+                }
+            ],
+            "name": {
+                "value": "Hwang, Myung-Jin",
+                "name_variants": [
+                    "Hwang, Myungjim"
+                ],
+                "preferred_name": "Myung-Jin Hwang"
+            },
+            "self": {
+                "$ref": "http://labs.inspirehep.net/api/authors/1210716"
+            },
+            "stub": false,
+            "$schema": "https://labs.inspirehep.net/schemas/records/authors.json",
+            "deleted": false,
+            "_collections": [
+                "Authors"
+            ],
+            "control_number": 7779,
+            "legacy_version": "20150923150746.0",
+            "email_addresses": [
+                {
+                    "value": "ichwang@hep2.yonsei.ac.kr",
+                    "current": true
+                }
+            ],
+            "project_membership": [
+                {
+                    "name": "KEK-BF-BELLE",
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/experiments/1108579"
+                    },
+                    "current": false,
+                    "curated_relation": true
+                }
+            ],
+            "legacy_creation_date": "2013-01-14"
+        },
+        "version_id": 22
+    }
+},
+
+
+{
+    "model": "api.recordmetadata",
+    "pk": "77802315-6e91-4c6e-b4e9-1f199bc6c66d",
+    "fields": {
+        "created": "2013-01-14T00:00:00",
+        "updated": "2018-10-13T03:43:06.088",
+        "json": {
+            "ids": [
+                {
+                    "value": "INSPIRE-00365761",
+                    "schema": "INSPIRE ID"
+                },
+                {
+                    "value": "HEPNAMES-1113712",
+                    "schema": "SPIRES"
+                },
+                {
+                    "value": "0000-0001-5498-9999",
+                    "schema": "ORCID"
+                }
+            ],
+            "name": {
+                "value": "Hwang, Myung-Jin",
+                "name_variants": [
+                    "Hwang, Myungjim"
+                ],
+                "preferred_name": "Myung-Jin Hwang"
+            },
+            "self": {
+                "$ref": "http://labs.inspirehep.net/api/authors/1210716"
+            },
+            "stub": false,
+            "$schema": "https://labs.inspirehep.net/schemas/records/authors.json",
+            "deleted": false,
+            "_collections": [
+                "Authors"
+            ],
+            "control_number": 7780,
+            "legacy_version": "20150923150746.0",
+            "email_addresses": [
+                {
+                    "value": "ichwang@hep2.yonsei.ac.kr",
+                    "current": true
+                }
+            ],
+            "project_membership": [
+                {
+                    "name": "KEK-BF-BELLE",
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/experiments/1108579"
+                    },
+                    "current": false,
+                    "curated_relation": true
+                }
+            ],
+            "legacy_creation_date": "2013-01-14"
+        },
+        "version_id": 22
+    }
+},
+
+
+
+
+{
+    "model": "api.recordmetadata",
+    "pk": "77812315-6e91-4c6e-b4e9-1f199bc6c66d",
+    "fields": {
+        "created": "2013-01-14T00:00:00",
+        "updated": "2018-10-13T03:43:06.088",
+        "json": {
+            "ids": [
+                {
+                    "value": "INSPIRE-00365761",
+                    "schema": "INSPIRE ID"
+                },
+                {
+                    "value": "HEPNAMES-1113712",
+                    "schema": "SPIRES"
+                },
+                {
+                    "value": "0000-0001-5498-9988",
+                    "schema": "ORCID"
+                }
+            ],
+            "name": {
+                "value": "Hwang, Myung-Jin",
+                "name_variants": [
+                    "Hwang, Myungjim"
+                ],
+                "preferred_name": "Myung-Jin Hwang"
+            },
+            "self": {
+                "$ref": "http://labs.inspirehep.net/api/authors/1210716"
+            },
+            "stub": false,
+            "$schema": "https://labs.inspirehep.net/schemas/records/authors.json",
+            "deleted": false,
+            "_collections": [
+                "Authors"
+            ],
+            "control_number": 7781,
+            "legacy_version": "20150923150746.0",
+            "email_addresses": [
+                {
+                    "value": "ichwang@hep2.yonsei.ac.kr",
+                    "current": true
+                }
+            ],
+            "project_membership": [
+                {
+                    "name": "KEK-BF-BELLE",
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/experiments/1108579"
+                    },
+                    "current": false,
+                    "curated_relation": true
+                }
+            ],
+            "legacy_creation_date": "2013-01-14"
+        },
+        "version_id": 22
+    }
+}
+]

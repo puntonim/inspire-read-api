@@ -1,0 +1,285 @@
+[
+{
+    "model": "api.recordmetadata",
+    "pk": "6666a412-f754-41e4-b683-4c56f0fc6e08",
+    "fields": {
+        "created": "2010-01-12T00:00:00",
+        "updated": "2018-10-13T00:50:51.194",
+        "json": {
+            "dois": [
+                {
+                    "value": "10.1111/j.1365-2966.2010.16335.x"
+                }
+            ],
+            "self": {
+                "$ref": "http://labs.inspirehep.net/api/literature/842588"
+            },
+            "titles": [
+                {
+                    "title": "Galaxy Zoo: Dust in Spirals"
+                },
+                {
+                    "title": "Galaxy Zoo: Dust in Spirals",
+                    "source": "arXiv"
+                }
+            ],
+            "$schema": "https://labs.inspirehep.net/schemas/records/hep.json",
+            "authors": [
+                {
+                    "ids": [
+                        {
+                            "value": "M.Maciejewski.1",
+                            "schema": "INSPIRE BAI"
+                        }
+                    ],
+                    "uuid": "0fdff9b4-9a5c-4f63-8f42-5047b5e89d00",
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/authors/7777"
+                    },
+                    "value": "Maciejewski, Micha\u0142",
+                    "signature_block": "MASTARk",
+                    "curated_relation": true
+                },
+                {
+                    "ids": [
+                        {
+                            "value": "INSPIRE-00365761",
+                            "schema": "INSPIRE ID"
+                        },
+                        {
+                            "value": "0000-0002-4133-9999",
+                            "schema": "ORCID"
+                        }
+                    ],
+                    "uuid": "88c55e35-3897-4e67-b9c6-9ea9fbfaa008",
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/authors/7778"
+                    },
+                    "value": "Hwang, Myung-Jin",
+                    "signature_block": "TANd"
+                },
+                {
+                    "ids": [
+                        {
+                            "value": "M.Maciejewski.1",
+                            "schema": "INSPIRE BAI"
+                        }
+                    ],
+                    "uuid": "0fdff9b4-9a5c-4f63-8f42-5047b5e89d00",
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/authors/7780"
+                    },
+                    "value": "NoActualIdentity, doe",
+                    "signature_block": "MASTARk",
+                    "curated_relation": true
+                },
+
+                {
+                    "ids": [
+                        {
+                            "value": "M.Maciejewski.1",
+                            "schema": "INSPIRE BAI"
+                        }
+                    ],
+                    "uuid": "0fdff9b4-9a5c-4f63-8f42-5047b5e89d00",
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/authors/7781"
+                    },
+                    "value": "NoCurated, doe",
+                    "signature_block": "MASTARk"
+                },
+
+
+
+
+                {
+                    "ids": [
+                    ],
+                    "uuid": "88c55e35-3897-4e67-b9c6-9ea9fbfaa008",
+                    "value": "AuthorNoRecord, norec",
+                    "signature_block": "TANd",
+                    "curated_relation": true
+                },
+                {
+                    "ids": [
+                    ],
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/authors/7779"
+                    },
+                    "uuid": "88c55e35-3897-4e67-b9c6-9ea9fbfaa008",
+                    "value": "AuthorPidNonRegistered, noreg",
+                    "signature_block": "TANd",
+                    "curated_relation": true
+                }
+            ],
+            "curated": false,
+            "figures": [
+                {
+                    "key": "fig1.png",
+                    "url": "file:///afs/cern.ch/project/inspire/PROD/var/data/files/g21/438089/fig1.png%3B1",
+                    "source": "arxiv",
+                    "caption": "The g-band axial ratio versus the radius enclosing 90\\% of the $r$-band light for GZ spirals ($p_{\\rm spiral } > 0.8$, $0.01\\le z \\le 0.09$). This shows the effects of seeing which rounds the isophotes of small galaxies. Horizontal lines are plotted at $r_{90}=4\\arcsec$ (the apparent minimum of this value for GZ spirals at $0.01 \\le z \\le 0.09$) and $r_{90}=10\\arcsec$, where the effects of seeing appear to disappear almost completely. The curved line shows a simple model in which the minimum possible semi-minor axis is $b=1.3\\arcsec$ (an estimate of the 25th percentile best seeing in SDSS - the median is about $1.43\\arcsec$)."
+                }
+            ],
+            "license": [
+                {
+                    "url": "http://arxiv.org/licenses/nonexclusive-distrib/1.0/",
+                    "imposing": "arXiv"
+                }
+            ],
+            "texkeys": [
+                "Masters:2010hm"
+            ],
+            "citeable": true,
+            "refereed": true,
+            "abstracts": [
+                {
+                    "value": "We investigate the effect of dust on spiral galaxies by measuring the inclination-dependence of optical colours for 24,276 well-resolved SDSS galaxies visually classified in Galaxy Zoo. We find clear trends of reddening with inclination which imply a total extinction from face-on to edge-on of 0.7, 0.6, 0.5 and 0.4 magnitudes for the ugri passbands. We split the sample into \"bulgy\" (early-type) and \"disky\" (late-type) spirals using the SDSS fracdeV (or f_DeV) parameter and show that the average face-on colour of \"bulgy\" spirals is redder than the average edge-on colour of \"disky\" spirals. This shows that the observed optical colour of a spiral galaxy is determined almost equally by the spiral type (via the bulge-disk ratio and stellar populations), and reddening due to dust. We find that both luminosity and spiral type affect the total amount of extinction, with \"disky\" spirals at M_r ~ -21.5 mags having the most reddening. This decrease of reddening for the most luminous spirals has not been observed before and may be related to their lower levels of recent star formation. We compare our results with the latest dust attenuation models of Tuffs et al. We find that the model reproduces the observed trends reasonably well but overpredicts the amount of u-band attenuation in edge-on galaxies. We end by discussing the effects of dust on large galaxy surveys and emphasize that these effects will become important as we push to higher precision measurements of galaxy properties and their clustering.",
+                    "source": "arXiv"
+                }
+            ],
+            "documents": [
+                {
+                    "key": "arXiv:1001.1744.pdf",
+                    "url": "file:///afs/cern.ch/project/inspire/PROD/var/data/files/g2/49016/arXiv%3A1001.1744.pdf%3B2",
+                    "source": "arxiv"
+                }
+            ],
+            "references": [
+                {
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/literature/756502"
+                    },
+                    "reference": {
+                        "arxiv_eprint": "0707.3413",
+                        "publication_info": {
+                            "artid": "297",
+                            "page_start": "297",
+                            "journal_title": "Astrophys.J.Suppl.",
+                            "journal_volume": "175"
+                        }
+                    },
+                    "curated_relation": false
+                }
+            ],
+            "_collections": [
+                "Literature"
+            ],
+            "public_notes": [
+                {
+                    "value": "MNRAS in press. 25 pages, 22 figures (including an abstract comparing GZ classifications with common automated methods for selecting disk/early type galaxies in SDSS data). v2 corrects typos found in proofs",
+                    "source": "arXiv"
+                }
+            ],
+            "arxiv_eprints": [
+                {
+                    "value": "1001.1744",
+                    "categories": [
+                        "astro-ph.CO"
+                    ]
+                }
+            ],
+            "document_type": [
+                "article"
+            ],
+            "preprint_date": "2010-01",
+            "_private_notes": [
+                {
+                    "value": "55 References from cites2 direct on 01/12/10",
+                    "source": "SPIRES-HIDDEN"
+                },
+                {
+                    "value": "55 References from cites2 direct on 01/13/10",
+                    "source": "SPIRES-HIDDEN"
+                },
+                {
+                    "value": "55 References from cites2 direct on 01/14/10",
+                    "source": "SPIRES-HIDDEN"
+                },
+                {
+                    "value": "CDS-1232950",
+                    "source": "CERN"
+                }
+            ],
+            "control_number": 6666,
+            "legacy_version": "20170220224612.0",
+            "number_of_pages": 25,
+            "publication_info": [
+                {
+                    "year": 2010,
+                    "page_end": "810",
+                    "page_start": "792",
+                    "journal_title": "Mon.Not.Roy.Astron.Soc.",
+                    "journal_record": {
+                        "$ref": "http://labs.inspirehep.net/api/journals/1214577"
+                    },
+                    "journal_volume": "404"
+                }
+            ],
+            "acquisition_source": {
+                "method": "oai",
+                "source": "arxiv"
+            },
+            "inspire_categories": [
+                {
+                    "term": "Astrophysics"
+                }
+            ],
+            "legacy_creation_date": "2010-01-12",
+            "external_system_identifiers": [
+                {
+                    "value": "2010MNRAS.404..792M",
+                    "schema": "ADS"
+                },
+                {
+                    "value": "SPIRES-8520844",
+                    "schema": "SPIRES"
+                }
+            ]
+        },
+        "version_id": 23
+    }
+},
+
+
+
+
+{
+    "model": "api.recordmetadata",
+    "pk": "6667a412-f754-41e4-b683-4c56f0fc6e08",
+    "fields": {
+        "created": "2010-01-12T00:00:00",
+        "updated": "2018-10-13T00:50:51.194",
+        "json": {
+            "dois": [
+                {
+                    "value": "10.1111/j.1365-2966.2010.16335.x"
+                }
+            ],
+            "control_number": 6667
+        },
+        "version_id": 23
+    }
+},
+
+
+
+
+{
+    "model": "api.recordmetadata",
+    "pk": "6668a412-f754-41e4-b683-4c56f0fc6e08",
+    "fields": {
+        "created": "2010-01-12T00:00:00",
+        "updated": "2018-10-13T00:50:51.194",
+        "json": {
+            "dois": [
+                {
+                    "value": "10.1111/j.1365-2966.2010.16335.x"
+                }
+            ],
+            "control_number": 6668
+        },
+        "version_id": 23
+    }
+}
+]

@@ -85,17 +85,17 @@ class OrcidIdentityManager(models.Manager):
         from .inspirehep import RecordMetadata
         record = RecordMetadata.literature_objects.get_by_pid(pid_value)
 
-        user_identities = []
+        orcid_identities = []
         for author_embedded in record.json_model.authors_embedded:
             uid = None
             if author_embedded.has_orcid_embedded:
                 # Business rule: is_curated not necessary in this case.
-                uid = author_embedded.orcid_user_identity
+                uid = author_embedded.orcid_identity
             elif author_embedded.is_curated and author_embedded.has_recid:
                 author = author_embedded.record_metadata
                 if author.json_model.has_orcid_embedded:
-                    uid = author.json_model.orcid_user_identity
+                    uid = author.json_model.orcid_identity
             if uid:
-                user_identities.append(uid)
+                orcid_identities.append(uid)
 
-        return user_identities
+        return orcid_identities

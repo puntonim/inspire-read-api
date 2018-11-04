@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from api.models.inspirehep import RecordMetadata
+from api.models.inspirehep import RecordMetadata, OrcidIdentity
 
 
 def assertRecordMetadataEqual(serialized, record_metadata_instance):
@@ -12,6 +12,16 @@ def assertRecordMetadataEqual(serialized, record_metadata_instance):
     t.assertEquals(serialized['updated'].split('Z')[0],
                    record_metadata_instance.updated.isoformat().split('+')[0])
     t.assertEquals(serialized['version_id'], record_metadata_instance.version_id)
+
+
+def assertOrcidIdentityEqual(serialized, orcid_identity_instance):
+    t = TestCase()
+    t.assertEquals(serialized['id'], orcid_identity_instance.id)
+    t.assertEquals(serialized['orcid_value'], str(orcid_identity_instance.orcid_value))
+    t.assertEquals(serialized['useridentity_user_id'], orcid_identity_instance.useridentity_user_id)
+    t.assertEquals(serialized['client_id'], str(orcid_identity_instance.client_id))
+    t.assertDictEqual(serialized['extra_data'], orcid_identity_instance.extra_data)
+    t.assertEquals(serialized['user'], orcid_identity_instance.user.id)
 
 
 class TestGenericFieldsInclude(TestCase):
@@ -138,7 +148,7 @@ class TestAuthorsList(TestCase):
         for i, rec in enumerate(recs):
             assertRecordMetadataEqual(response.json()['results'][i], rec)
 
-    def test_literature(self):
+    def test_get_by_literature(self):
         lit_pid_value = 6666
         query_params = 'literature={}'.format(lit_pid_value)
         response = self.client.get('{}?{}'.format(self.base_url, query_params))
@@ -148,7 +158,7 @@ class TestAuthorsList(TestCase):
         for i, rec in enumerate(recs):
             assertRecordMetadataEqual(response.json()['results'][i], rec)
 
-    def test_literature_nonexistent(self):
+    def test_get_by_literature_nonexistent(self):
         lit_pid_value = 1
         query_params = 'literature={}'.format(lit_pid_value)
         response = self.client.get('{}?{}'.format(self.base_url, query_params))
@@ -156,3 +166,32 @@ class TestAuthorsList(TestCase):
         self.assertEquals(response.json()['count'], 0)
         self.assertListEqual(response.json()['results'], [])
 
+
+class TestOrcidIdentitiesList(TestCase):
+    fixtures = (
+        'tests/api/views/fixtures/test_orcid_identities_list_records_lit.json',
+        'tests/api/views/fixtures/test_orcid_identities_list_records_aut.json',
+        'tests/api/views/fixtures/test_orcid_identities_list_pids.json',
+        'tests/api/views/fixtures/test_orcid_identities_list_orcids.json',
+        'tests/api/views/fixtures/test_orcid_identities_list_users.json',
+    )
+
+    def setUp(self, **kwargs):
+        self.base_url = '/api/identities/orcid/'
+
+    def test_get(self):
+        response = self.client.get(self.base_url)
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 4)
+        orcids = OrcidIdentity.objects.all().order_by('id')
+        for i, orcid in enumerate(orcids):
+            assertOrcidIdentityEqual(response.json()['results'][i], orcid)
+
+    def test_get_by_literature(self):
+        lit_pid_value = 6666
+        query_params = 'literature={}'.format(lit_pid_value)
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 2)
+        import ipdb; ipdb.set_trace()
+        assert True

@@ -31,6 +31,31 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='User',
+            fields=[
+                ('id', models.IntegerField(primary_key=True, serialize=False)),
+                ('email',
+                 models.CharField(blank=True, max_length=255, null=True,
+                                  unique=True)),
+                ('password',
+                 models.CharField(blank=True, max_length=255, null=True)),
+                ('active', models.BooleanField(blank=True, null=True)),
+                ('confirmed_at', models.DateTimeField(blank=True, null=True)),
+                ('last_login_at', models.DateTimeField(blank=True, null=True)),
+                ('current_login_at',
+                 models.DateTimeField(blank=True, null=True)),
+                ('last_login_ip',
+                 models.CharField(blank=True, max_length=50, null=True)),
+                ('current_login_ip',
+                 models.CharField(blank=True, max_length=50, null=True)),
+                ('login_count', models.IntegerField(blank=True, null=True)),
+            ],
+            options={
+                'db_table': 'accounts_user',
+                'managed': MANAGED,
+            },
+        ),
+        migrations.CreateModel(
             name='OrcidIdentity',
             fields=[
                 ('orcid_value', models.CharField(max_length=255, unique=True)),
@@ -38,6 +63,7 @@ class Migration(migrations.Migration):
                 ('client_id', models.CharField(max_length=255)),
                 ('extra_data', django.contrib.postgres.fields.jsonb.JSONField()),
                 ('id', models.IntegerField(db_column='remoteaccount_id', primary_key=True, serialize=False)),
+                ('user', models.ForeignKey(on_delete=models.DO_NOTHING, to='api.User', db_column='remoteaccount_user_id')),
             ],
             options={
                 'db_table': 'oauthclient_orcid_identity',
@@ -73,25 +99,6 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'pidstore_pid',
-                'managed': MANAGED,
-            },
-        ),
-        migrations.CreateModel(
-            name='User',
-            fields=[
-                ('id', models.IntegerField(primary_key=True, serialize=False)),
-                ('email', models.CharField(blank=True, max_length=255, null=True, unique=True)),
-                ('password', models.CharField(blank=True, max_length=255, null=True)),
-                ('active', models.BooleanField(blank=True, null=True)),
-                ('confirmed_at', models.DateTimeField(blank=True, null=True)),
-                ('last_login_at', models.DateTimeField(blank=True, null=True)),
-                ('current_login_at', models.DateTimeField(blank=True, null=True)),
-                ('last_login_ip', models.CharField(blank=True, max_length=50, null=True)),
-                ('current_login_ip', models.CharField(blank=True, max_length=50, null=True)),
-                ('login_count', models.IntegerField(blank=True, null=True)),
-            ],
-            options={
-                'db_table': 'accounts_user',
                 'managed': MANAGED,
             },
         ),
