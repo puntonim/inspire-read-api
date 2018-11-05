@@ -89,7 +89,7 @@ $ manage dumpdata --format=json --indent=4 --database=inspire --indent=4 -v 3 --
 
 RECORD, AUTORI, TOKENS
 ======================
-- Senza token:
+- Senza token:  -- Non piu vero con l'ultimo dump
 Record 250460
 Has author 994322 (2nd author)
 With orcid 0000-0002-3132-4417

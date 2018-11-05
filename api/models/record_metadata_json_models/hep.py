@@ -16,6 +16,24 @@ class HepJson(utils.data.SmartgetDictMixin):
 
 
 class AuthorEmbedded(utils.data.SmartgetDictMixin):
+    """
+    A dictionary like:
+        {
+            "ids": [
+                {
+                    "value": "M.Maciejewski.1",
+                    "schema": "INSPIRE BAI"
+                }
+            ],
+            "uuid": "0fdff9b4-9a5c-4f63-8f42-5047b5e89d00",
+            "record": {
+                "$ref": "http://labs.inspirehep.net/api/authors/7780"
+            },
+            "value": "Maciejewski, Micha",
+            "signature_block": "MASTARk",
+            "curated_relation": true
+        }
+    """
     @property
     def is_curated(self):
         return self.smartget('curated_relation', False)
@@ -30,21 +48,31 @@ class AuthorEmbedded(utils.data.SmartgetDictMixin):
         if not orcids:
             return None
         if len(orcids) > 1:
-            raise Exception('This guy has #{} orcids, too many!'.format(len(orcids)))  # TODO
-        return orcids[0]['value']
+            # TODO specific exception
+            raise Exception('This guy has #{} orcids, too many!'.format(len(orcids)))
+        return OrcidEmbedded(orcids[0])
 
     @property
-    def has_orcid_identity(self):
-        return bool(self.orcid_identity)
+    def all_orcids_embedded(self):
+        results = [self.orcid_embedded]
+        # Business rule: the author must be curated in order to consider her
+        # author_record_metadata.json_model.orcid_embedded.
+        if self.is_curated and self.has_recid:
+            results.append(self.author_record_metadata.json_model.orcid_embedded)
+        results = list(filter(bool, results))
+        # Ensure all orcids actually have the same value.
+        if len(results) > 1:
+            for i in range(len(results)-1):
+                if results[i]['value'] != results[i+1]['value']:
+                    # TODO specific exception
+                    raise Exception('This guy have multiple different orcids')
+        return results
 
     @property
     def orcid_identity(self):
-        """
-        Not all orcid_embedded have a matching OrcidIdentity.
-        Typically there is a OrcidIdentity if the author has logged in in Legacy
-        or Labs with her ORCID.
-        """
-        return self.record_metadata.json_model.orcid_identity
+        for orcid_embedded in self.all_orcids_embedded:
+            if orcid_embedded.has_orcid_identity:
+                return orcid_embedded.orcid_identity
 
     @property
     def has_recid(self):
@@ -58,8 +86,34 @@ class AuthorEmbedded(utils.data.SmartgetDictMixin):
         return int(ref.split('/')[-1])
 
     @property
-    def record_metadata(self):
+    def author_record_metadata(self):
         from ..inspirehep import RecordMetadata
         if not self.has_recid:
             return None
         return RecordMetadata.author_objects.get_by_pid(self.recid)
+
+
+class OrcidEmbedded(utils.data.SmartgetDictMixin):
+    """
+    A dictionary like:
+        {
+            "value": "0000-0002-4133-9999",
+            "schema": "ORCID"
+        }
+    """
+    @property
+    def has_orcid_identity(self):
+        return bool(self.orcid_identity)
+
+    @property
+    def orcid_identity(self):
+        """
+        Not all OrcidEmbedded have a matching OrcidIdentity.
+        Typically there is a OrcidIdentity if the author has logged in in Legacy
+        or Labs with her ORCID.
+        """
+        from ..inspirehep import OrcidIdentity
+        try:
+            return OrcidIdentity.objects.get(orcid_value=self['value'])
+        except OrcidIdentity.DoesNotExist:
+            return None
