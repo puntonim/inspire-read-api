@@ -67,6 +67,14 @@ class PidstorePid(models.Model):
 
 
 # TODO handle deleted records, json['deleted'] = True
+# RecordMetadata.objects.filter(Q(json__deleted__isnull=True)|Q(json__deleted=False)).count()
+# Note:
+# RecordMetadata.objects.exclude(json__deleted=True)
+# extract only those that have deleted=False (not those that do not have `deleted`)
+# Consider an index.
+# Partial-index would be great, but that would mean to change all the existent indexes.
+
+
 class RecordMetadata(models.Model):
     SCHEMA_AUTHORS = 'authors.json'
     SCHEMA_CONFERENCES = 'conferences.json'
