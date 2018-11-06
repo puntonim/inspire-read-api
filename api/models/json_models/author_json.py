@@ -4,7 +4,7 @@ a authors.json $schema.
 """
 import utils.data
 
-from .hep import OrcidEmbedded
+from .embedded.orcid_embedded import OrcidEmbedded
 
 
 class AuthorJson(utils.data.SmartgetDictMixin):

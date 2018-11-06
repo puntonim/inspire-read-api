@@ -3,8 +3,8 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from . import managers
-from .record_metadata_json_models.hep import HepJson
-from .record_metadata_json_models.authors import AuthorJson
+from .json_models.hep_json import HepJson
+from .json_models.author_json import AuthorJson
 
 
 MANAGED = False

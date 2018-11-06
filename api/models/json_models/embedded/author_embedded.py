@@ -1,18 +1,6 @@
-"""
-HepJson model encapsulates the logic to access RecordMetadata.json data for
-a hep.json $schema.
-"""
 import utils.data
 
-
-class HepJson(utils.data.SmartgetDictMixin):
-    @property
-    def authors_embedded(self):
-        return [AuthorEmbedded(a) for a in self.smartget('authors', [])]
-
-    @property
-    def curated_authors_embedded(self):
-        return [a for a in self.authors_embedded if a.is_curated]
+from .orcid_embedded import OrcidEmbedded
 
 
 class AuthorEmbedded(utils.data.SmartgetDictMixin):
@@ -87,33 +75,7 @@ class AuthorEmbedded(utils.data.SmartgetDictMixin):
 
     @property
     def author_record_metadata(self):
-        from ..inspirehep import RecordMetadata
+        from api.models.inspirehep import RecordMetadata
         if not self.has_recid:
             return None
         return RecordMetadata.author_objects.get_by_pid(self.recid)
-
-
-class OrcidEmbedded(utils.data.SmartgetDictMixin):
-    """
-    A dictionary like:
-        {
-            "value": "0000-0002-4133-9999",
-            "schema": "ORCID"
-        }
-    """
-    @property
-    def has_orcid_identity(self):
-        return bool(self.orcid_identity)
-
-    @property
-    def orcid_identity(self):
-        """
-        Not all OrcidEmbedded have a matching OrcidIdentity.
-        Typically there is a OrcidIdentity if the author has logged in in Legacy
-        or Labs with her ORCID.
-        """
-        from ..inspirehep import OrcidIdentity
-        try:
-            return OrcidIdentity.objects.get(orcid_value=self['value'])
-        except OrcidIdentity.DoesNotExist:
-            return None
