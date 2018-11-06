@@ -182,7 +182,7 @@ class TestOrcidIdentitiesList(TestCase):
     def test_get(self):
         response = self.client.get(self.base_url)
         self.assertEquals(response.status_code, 200)
-        self.assertEquals(response.json()['count'], 4)
+        self.assertEquals(response.json()['count'], 5)
         orcids = OrcidIdentity.objects.all().order_by('id')
         for i, orcid in enumerate(orcids):
             assertOrcidIdentityEqual(response.json()['results'][i], orcid)
@@ -193,5 +193,4 @@ class TestOrcidIdentitiesList(TestCase):
         response = self.client.get('{}?{}'.format(self.base_url, query_params))
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.json()['count'], 2)
-        import ipdb; ipdb.set_trace()
         assert True

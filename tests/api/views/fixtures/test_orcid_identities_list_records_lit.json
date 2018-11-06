@@ -47,6 +47,24 @@
                             "schema": "INSPIRE ID"
                         },
                         {
+                            "value": "0000-0002-4133-1234",
+                            "schema": "ORCID"
+                        }
+                    ],
+                    "uuid": "88c55e35-3897-4e67-b9c6-9ea9fbfaa008",
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/authors/7779"
+                    },
+                    "value": "Hwang, Myung-Jin",
+                    "signature_block": "TANd"
+                },
+                {
+                    "ids": [
+                        {
+                            "value": "INSPIRE-00365761",
+                            "schema": "INSPIRE ID"
+                        },
+                        {
                             "value": "0000-0002-4133-9999",
                             "schema": "ORCID"
                         }
@@ -89,25 +107,11 @@
                     "signature_block": "MASTARk"
                 },
 
-
-
-
                 {
                     "ids": [
                     ],
                     "uuid": "88c55e35-3897-4e67-b9c6-9ea9fbfaa008",
                     "value": "AuthorNoRecord, norec",
-                    "signature_block": "TANd",
-                    "curated_relation": true
-                },
-                {
-                    "ids": [
-                    ],
-                    "record": {
-                        "$ref": "http://labs.inspirehep.net/api/authors/7779"
-                    },
-                    "uuid": "88c55e35-3897-4e67-b9c6-9ea9fbfaa008",
-                    "value": "AuthorPidNonRegistered, noreg",
                     "signature_block": "TANd",
                     "curated_relation": true
                 }
