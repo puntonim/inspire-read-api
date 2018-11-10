@@ -69,7 +69,7 @@ class RecordMetadataAuthorsManager(models.Manager):
             literature = self.model.literature_objects.get_by_pid(pid_value)
         except RecordMetadata.DoesNotExist:
             return self.filter_by_pids([])
-        recids = [aut.recid for aut in literature.json_model.authors_embedded if aut.has_recid]
+        recids = [aut.recid for aut in literature.json_model.authors_embedded if aut.recid]
         return self.filter_by_pids(recids)
 
 

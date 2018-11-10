@@ -10,10 +10,6 @@ class OrcidEmbedded(utils.data.SmartgetDictMixin):
         }
     """
     @property
-    def has_orcid_identity(self):
-        return bool(self.orcid_identity)
-
-    @property
     def orcid_identity(self):
         """
         Not all OrcidEmbedded have a matching OrcidIdentity.

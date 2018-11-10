@@ -27,10 +27,6 @@ class AuthorEmbedded(utils.data.SmartgetDictMixin):
         return self.smartget('curated_relation', False)
 
     @property
-    def has_orcid_embedded(self):
-        return bool(self.orcid_embedded)
-
-    @property
     def orcid_embedded(self):
         orcids = self.smartget_if('ids', lambda id: id['schema'].upper()=='ORCID' if id else False)
         if not orcids:
@@ -45,7 +41,7 @@ class AuthorEmbedded(utils.data.SmartgetDictMixin):
         results = [self.orcid_embedded]
         # Business rule: the author must be curated in order to consider her
         # author_record_metadata.json_model.orcid_embedded.
-        if self.is_curated and self.has_recid:
+        if self.is_curated and self.recid:
             results.append(self.author_record_metadata.json_model.orcid_embedded)
         results = list(filter(bool, results))
         # Ensure all orcids actually have the same value.
@@ -59,12 +55,8 @@ class AuthorEmbedded(utils.data.SmartgetDictMixin):
     @property
     def orcid_identity(self):
         for orcid_embedded in self.all_orcids_embedded:
-            if orcid_embedded.has_orcid_identity:
+            if orcid_embedded.orcid_identity:
                 return orcid_embedded.orcid_identity
-
-    @property
-    def has_recid(self):
-        return bool(self.recid)
 
     @property
     def recid(self):
@@ -76,6 +68,6 @@ class AuthorEmbedded(utils.data.SmartgetDictMixin):
     @property
     def author_record_metadata(self):
         from api.models.inspirehep import RecordMetadata
-        if not self.has_recid:
+        if not self.recid:
             return None
         return RecordMetadata.author_objects.get_by_pid(self.recid)
