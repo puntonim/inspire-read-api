@@ -39,9 +39,6 @@ class RecordMetadataLiteratureManager(models.Manager):
     def get_queryset(self):
         from .inspirehep import PidstorePid
         inner_query = PidstorePid.registered_objects.filter(pid_type=PidstorePid.TYPE_LIT).values('object_uuid')
-        # The raw query produced by Django ORM is:
-        # SELECT * FROM records_metadata
-        # WHERE id IN (SELECT object_uuid FROM pidstore_pid WHERE status = R AND pid_type = lit)
         return super().get_queryset().filter(id__in=inner_query)
 
     def get_by_pid(self, pid_value, pid_status='R'):
@@ -58,9 +55,6 @@ class RecordMetadataAuthorsManager(models.Manager):
     def get_queryset(self):
         from .inspirehep import PidstorePid
         inner_query = PidstorePid.registered_objects.filter(pid_type=PidstorePid.TYPE_AUT).values('object_uuid')
-        # The raw query produced by Django ORM is:
-        # SELECT * FROM records_metadata
-        # WHERE id IN (SELECT object_uuid FROM pidstore_pid WHERE status = R AND pid_type = aut)
         return super().get_queryset().filter(id__in=inner_query)
 
     def get_by_pid(self, pid_value, pid_status='R'):
@@ -70,7 +64,11 @@ class RecordMetadataAuthorsManager(models.Manager):
         return self.model.objects.filter_by_pids(pid_values, pid_type='aut', pid_status=pid_status)
 
     def filter_by_literature(self, pid_value):
-        literature = self.model.literature_objects.get_by_pid(pid_value)
+        from .inspirehep import RecordMetadata
+        try:
+            literature = self.model.literature_objects.get_by_pid(pid_value)
+        except RecordMetadata.DoesNotExist:
+            return self.filter_by_pids([])
         recids = [aut.recid for aut in literature.json_model.authors_embedded if aut.has_recid]
         return self.filter_by_pids(recids)
 
@@ -83,8 +81,10 @@ class PidstorePidRegisteredManager(models.Manager):
 class OrcidIdentityManager(models.Manager):
     def filter_by_authored_literature(self, pid_value):
         from .inspirehep import RecordMetadata
-        literature = RecordMetadata.literature_objects.get_by_pid(pid_value)
-
+        try:
+            literature = RecordMetadata.literature_objects.get_by_pid(pid_value)
+        except RecordMetadata.DoesNotExist:
+            return self.filter(id__in=[])
         orcid_identities_ids = []
         for author_embedded in literature.json_model.authors_embedded:
             if author_embedded.orcid_identity:

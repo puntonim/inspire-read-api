@@ -36,7 +36,7 @@
                     "record": {
                         "$ref": "http://labs.inspirehep.net/api/authors/7777"
                     },
-                    "value": "Maciejewski, Micha\u0142",
+                    "value": "With orcid identity",
                     "signature_block": "MASTARk",
                     "curated_relation": true
                 },
@@ -55,7 +55,7 @@
                     "record": {
                         "$ref": "http://labs.inspirehep.net/api/authors/7779"
                     },
-                    "value": "Hwang, Myung-Jin",
+                    "value": "With embedded orcid",
                     "signature_block": "TANd"
                 },
                 {
@@ -73,7 +73,7 @@
                     "record": {
                         "$ref": "http://labs.inspirehep.net/api/authors/7778"
                     },
-                    "value": "Hwang, Myung-Jin",
+                    "value": "Embedded orcid, but no orcid identity",
                     "signature_block": "TANd"
                 },
                 {
@@ -87,7 +87,7 @@
                     "record": {
                         "$ref": "http://labs.inspirehep.net/api/authors/7780"
                     },
-                    "value": "NoActualIdentity, doe",
+                    "value": "No orcid identity",
                     "signature_block": "MASTARk",
                     "curated_relation": true
                 },
@@ -103,7 +103,7 @@
                     "record": {
                         "$ref": "http://labs.inspirehep.net/api/authors/7781"
                     },
-                    "value": "NoCurated, doe",
+                    "value": "No curated",
                     "signature_block": "MASTARk"
                 },
 
@@ -111,7 +111,7 @@
                     "ids": [
                     ],
                     "uuid": "88c55e35-3897-4e67-b9c6-9ea9fbfaa008",
-                    "value": "AuthorNoRecord, norec",
+                    "value": "No record",
                     "signature_block": "TANd",
                     "curated_relation": true
                 }

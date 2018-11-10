@@ -114,7 +114,7 @@ class TestAuthorDetail(TestCase):
         rec = RecordMetadata.author_objects.get_by_pid(self.pid_value)
         assertRecordMetadataEqual(response.json(), rec)
 
-    def test_get_pid_non_registered(self):
+    def test_get_pid_not_registered(self):
         base_url = '/api/authors/9999/'
         response = self.client.get(base_url)
         self.assertEquals(response.status_code, 404)
@@ -166,6 +166,14 @@ class TestAuthorsList(TestCase):
         self.assertEquals(response.json()['count'], 0)
         self.assertListEqual(response.json()['results'], [])
 
+    def test_get_by_literature_pid_not_registered(self):
+        lit_pid_value = 6668
+        query_params = 'literature={}'.format(lit_pid_value)
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 0)
+        self.assertListEqual(response.json()['results'], [])
+
 
 class TestOrcidIdentitiesList(TestCase):
     fixtures = (
@@ -193,4 +201,23 @@ class TestOrcidIdentitiesList(TestCase):
         response = self.client.get('{}?{}'.format(self.base_url, query_params))
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.json()['count'], 2)
-        assert True
+        orcids = OrcidIdentity.objects.filter(orcid_value__in=[
+            '0000-0001-5498-9174', '0000-0002-4133-1234'])
+        for i, orcid in enumerate(orcids):
+            assertOrcidIdentityEqual(response.json()['results'][i], orcid)
+
+    def test_get_by_literature_nonexistent(self):
+        lit_pid_value = 1
+        query_params = 'literature={}'.format(lit_pid_value)
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 0)
+        self.assertListEqual(response.json()['results'], [])
+
+    def test_get_by_literature_pid_not_registered(self):
+        lit_pid_value = 6668
+        query_params = 'literature={}'.format(lit_pid_value)
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 0)
+        self.assertListEqual(response.json()['results'], [])
