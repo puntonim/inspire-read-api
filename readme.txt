@@ -102,6 +102,38 @@ With orcid 0000-0001-9835-7128
 Con UserIdentity e User 52921
 
 
+DELETED RECORD
+==============
+Deleted record shoudl have PidstorePid.status = 'D'.
+And also RecordMetadata.json['deleted'] = True.
+Unfortunately there are some inconsistency, like for RecordMetadata.id
+  84f8960b-db32-4dee-b8ed-291da1f7fc3a
+  4f2d48a0-e81e-49c5-8296-63af4e093f89
+  981bc8cc-b7b8-48ce-917d-fd8c4b628969
+But we should consider PidstorePid.status to be our oracle.
+
+Thus, all queries like:
+RecordMetadata.objects.get_by_pid()
+RecordMetadata.objects.filter_by_pids()
+RecordMetadata.literature_objects.*
+RecordMetadata.author_objects.*
+are safe and return only registered records (PidstorePid.status = 'R').
+
+The only query that might return records in any state (so also deleted) is:
+RecordMetadata.objects.get()
+RecordMetadata.objects.all()
+which should be indeed rarely used, as the ones mentioned above are more handy.
+
+For the records, interesting queries for the field RecordMetadata.json['deleted']:
+- All non deleted:
+RecordMetadata.objects.filter(Q(json__deleted__isnull=True)|Q(json__deleted=False))
+  Note that:
+  RecordMetadata.objects.exclude(json__deleted=True)
+  extract only those that have deleted=False (not those that do not have `deleted`)
+- I tried several kind of indexes on json__deleted, but none is being used
+in queries, as the DB optimization chooses to use a filter (rather than the index).
+
+
 OPERAZIONI SU DB INSPIRE
 ========================
 - Garantire permessi in lettura:

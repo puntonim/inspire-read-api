@@ -66,15 +66,6 @@ class PidstorePid(models.Model):
         unique_together = (('pid_type', 'pid_value'),)
 
 
-# TODO handle deleted records, json['deleted'] = True
-# RecordMetadata.objects.filter(Q(json__deleted__isnull=True)|Q(json__deleted=False)).count()
-# Note:
-# RecordMetadata.objects.exclude(json__deleted=True)
-# extract only those that have deleted=False (not those that do not have `deleted`)
-# Consider an index.
-# Partial-index would be great, but that would mean to change all the existent indexes.
-
-
 class RecordMetadata(models.Model):
     SCHEMA_AUTHORS = 'authors.json'
     SCHEMA_CONFERENCES = 'conferences.json'
@@ -93,7 +84,7 @@ class RecordMetadata(models.Model):
     json = JSONField()
     version_id = models.IntegerField()
 
-    objects = managers.RecordMetadataManager()
+    objects = managers.RecordMetadataQuerySet.as_manager()
     literature_objects = managers.RecordMetadataLiteratureManager()
     author_objects = managers.RecordMetadataAuthorsManager()
 
@@ -256,7 +247,7 @@ class OrcidIdentity(models.Model):
     # Originally: remoteaccount.extra_data.
     extra_data = JSONField()
 
-    objects = managers.OrcidIdentityManager()
+    objects = managers.OrcidIdentityQuerySet.as_manager()
 
     class Meta:
         managed = MANAGED

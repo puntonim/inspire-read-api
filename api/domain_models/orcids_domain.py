@@ -10,12 +10,13 @@ class OrcidIdentitiesListDomain(RecordMetadataListDomainBase):
         self.query_params_parser = QueryParamsParser(query_params)
 
     def get_queryset(self):
+        # Always return ordered querysets because they will be paginated
+        # later on.
+        queryset = OrcidIdentity.objects.all().order_by('id')
+
         # Query filters.
         literature_recid = self.query_params_parser.literature
         if literature_recid:
-            queryset = OrcidIdentity.objects\
-                .filter_by_authored_literature(literature_recid)\
-                .order_by('id')
-        else:
-            queryset = OrcidIdentity.objects.all().order_by('id')
+            queryset = queryset.filter_by_authored_literature(literature_recid)
+
         return queryset
