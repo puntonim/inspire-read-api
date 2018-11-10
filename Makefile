@@ -1,3 +1,7 @@
+# This Makefile requires the following commands to be available:
+# * virtualenv
+# * python2
+
 DEPS:=requirements.txt
 VIRTUALENV=$(shell which virtualenv)
 PIP:="venv/bin/pip"
@@ -9,22 +13,31 @@ PYTHON=$(shell "$(CMD_FROM_VENV)" "python")
 ## TODO add tox, test, venv, lint, isort, ...
 
 
-## Utilities for the venv currently active.
+## Django local dev in the venv currently active.
 
-requirements:
-	pip install -U -r $(DEPS)
-
-killmanage:
+killmanage: _ensure_active_env
 	pkill -f manage.py
 
-serve:
+serve: _ensure_active_env
 	python ./manage.py runserver
 
-shell:
+shell: _ensure_active_env
 	python ./manage.py shell
 
-tests:
+tests: _ensure_active_env
 	python ./manage.py test
+
+
+## Utilities for the venv currently active.
+
+_ensure_active_env:
+ifndef VIRTUAL_ENV
+	@echo 'Error: no virtual environment active'
+	@exit 1
+endif
+
+requirements: _ensure_active_env
+	pip install -U -r $(DEPS)
 
 
 ## Generic utilities.
@@ -40,5 +53,6 @@ clean: pyclean
 	rm -rf .tox
 	rm -rf dist
 
-cleanpipcache:
+pipclean:
 	rm -rf ~/Library/Caches/pip
+	rm -rf ~/.cache/pip
