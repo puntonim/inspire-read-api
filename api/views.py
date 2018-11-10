@@ -10,8 +10,8 @@ from rest_framework.reverse import reverse
 
 from . import serializers
 from .domain_models.record_metadata_base import RecordMetadataDetailDomainBase
-from .domain_models.authors import AuthorsListDomain
-from .domain_models.orcids import OrcidIdentitiesListDomain
+from .domain_models.authors_domain import AuthorsListDomain
+from .domain_models.orcids_domain import OrcidIdentitiesListDomain
 from .domain_models import exceptions as domain_exceptions
 
 
