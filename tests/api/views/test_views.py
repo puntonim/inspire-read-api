@@ -1,4 +1,5 @@
-from django.test import TestCase
+from django.core.exceptions import ObjectDoesNotExist
+from django.test import TestCase, TransactionTestCase
 
 from api.models.inspirehep import RecordMetadata, OrcidIdentity
 
@@ -14,7 +15,7 @@ def assertRecordMetadataEqual(serialized, record_metadata_instance):
     t.assertEquals(serialized['version_id'], record_metadata_instance.version_id)
 
 
-def assertOrcidIdentityEqual(serialized, orcid_identity_instance):
+def assertOrcidIdentityEqual(serialized, orcid_identity_instance, has_token=False):
     t = TestCase()
     t.assertEquals(serialized['id'], orcid_identity_instance.id)
     t.assertEquals(serialized['orcid_value'], str(orcid_identity_instance.orcid_value))
@@ -22,6 +23,12 @@ def assertOrcidIdentityEqual(serialized, orcid_identity_instance):
     t.assertEquals(serialized['client_id'], str(orcid_identity_instance.client_id))
     t.assertDictEqual(serialized['extra_data'], orcid_identity_instance.extra_data)
     t.assertEquals(serialized['user'], orcid_identity_instance.user.id)
+    if has_token:
+        try:
+            plain = orcid_identity_instance.remotetoken.access_token_plain
+        except ObjectDoesNotExist:
+            plain = None
+        t.assertEquals(serialized['token'], plain)
 
 
 class TestGenericFieldsInclude(TestCase):
@@ -182,6 +189,7 @@ class TestOrcidIdentitiesList(TestCase):
         'tests/api/views/fixtures/test_orcid_identities_list_pids.json',
         'tests/api/views/fixtures/test_orcid_identities_list_orcids.json',
         'tests/api/views/fixtures/test_orcid_identities_list_users.json',
+        'tests/api/views/fixtures/test_orcid_identities_list_tokens.json',
     )
 
     def setUp(self, **kwargs):
@@ -346,3 +354,26 @@ class TestOrcidIdentitiesList(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.json()['count'], 0)
         self.assertListEqual(response.json()['results'], [])
+
+    def test_get_with_tokens(self):
+        query_params = 'fields-extra=token'
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 6)
+        orcids = OrcidIdentity.objects.all().order_by('id')
+        for i, orcid in enumerate(orcids):
+            assertOrcidIdentityEqual(response.json()['results'][i], orcid, has_token=True)
+
+    def test_filter_by_author_and_push_and_literature_with_tokens(self):
+        lit_pid_value = 6666
+        aut_pid_value = 7777
+        query_params = 'literature={}&author={}&push=false&fields-extra=token'.format(
+            lit_pid_value, aut_pid_value)
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 1)
+        orcids = OrcidIdentity.objects\
+            .filter(orcid_value__in=['0000-0001-5498-9174', '0000-0002-4133-1234']) \
+            .filter(extra_data__allow_push=False)
+        for i, orcid in enumerate(orcids):
+            assertOrcidIdentityEqual(response.json()['results'][i], orcid, has_token=True)

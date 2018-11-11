@@ -1,10 +1,10 @@
 [
 {
     "model": "api.remotetoken",
-    "pk": 1248,
+    "pk": 1,
     "fields": {
         "token_type": "",
-        "access_token": "eEQ2N29Qb3hTTjhheG4xV29KWjkvdz09",  // mytoken  (remove this comment)
+        "access_token": "eEQ2N29Qb3hTTjhheG4xV29KWjkvdz09",
         "secret": "",
         "created": "2018-04-20T13:00:33.183",
         "updated": "2018-04-20T13:00:33.183"
@@ -12,10 +12,10 @@
 },
 {
     "model": "api.remotetoken",
-    "pk": 2910,
+    "pk": 2,
     "fields": {
         "token_type": "",
-        "access_token": "eEQ2N29Qb3hTTjhheG4xV29KWjkvdz09",  // mytoken  (remove this comment)
+        "access_token": "eEQ2N29Qb3hTTjhheG4xV29KWjkvdz09",
         "secret": "",
         "created": "2018-04-03T15:06:07.491",
         "updated": "2018-06-16T02:45:23.286"

@@ -21,7 +21,6 @@ class InspirehepRouter:
     def db_for_write(self, model, **hints):
         """
         Return the key in settings.DATABASES to be used in write ops.
-
         """
         if model._meta.app_label == 'api':
             # Note: models with managed = False are ignored during `migrate` and
