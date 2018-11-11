@@ -1,10 +1,12 @@
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.utils.functional import cached_property
 
 from . import managers
 from .json_models.hep_json import HepJson
 from .json_models.author_json import AuthorJson
+from utils.decryption import AesEngine
 
 
 MANAGED = False
@@ -173,7 +175,7 @@ class User(models.Model):
         db_table = 'accounts_user'
 
     @property
-    def orcid_remote_account(self):
+    def orcid_identity(self):
         return self.orcididentity_set.get(client_id=settings.ORCID_APP_CONSUMER_KEY)
 
 
@@ -227,14 +229,26 @@ class RemoteToken(models.Model):
         # Primary key: (id_remote_account, token_type)
         unique_together = (('orcid_identity', 'token_type'),)
 
+    @cached_property
+    def access_token_plain(self):
+        engine = AesEngine()
+        engine._set_padding_mechanism(None)
+        engine._update_key(settings.ORCID_TOKENS_ENCRYPTION_KEY)
+        return engine.decrypt(self.access_token)
+
 
 class OrcidIdentity(models.Model):
     """
     This is actually a view that (full outer) joins useridentity and remoteaccount.
     """
     # TODO nota che ci sono 9 remoteacc senza userid, quindi il `orcid_value`
-    # e' null, quindi forse qs cambo deve essere nullable. O meglio lanciare un
+    # e' null, quindi forse qs campo deve essere nullable. O meglio lanciare un
     # eccezione.
+
+    # Note that not all OrcidIdentity (originally RemoteAccount) have a
+    # RemoteToken (despite having a orcid_value). on 2018/10 there are
+    # 3028 (out of 12110) OrcidIdentities with no RemoteToken.
+
     # Originally: remoteaccount.id.
     id = models.IntegerField(primary_key=True, db_column='remoteaccount_id')
     # Originally: useridentity.id.

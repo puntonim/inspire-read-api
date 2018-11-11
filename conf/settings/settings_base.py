@@ -92,6 +92,8 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 #     }
 # }
 
+DATABASE_ROUTERS = ['api.models.routers.InspirehepRouter',]
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -155,3 +157,6 @@ ORCID_APP_CONSUMER_KEY = '0000-0001-8607-8906'
 # Migrations are only used in tests, thus move them to the test module.
 MIGRATION_MODULES = {
     'api': 'tests.api.models.migrations'}
+
+# Key used to encrypt ORCID's access tokens.
+ORCID_TOKENS_ENCRYPTION_KEY = 'mykey'

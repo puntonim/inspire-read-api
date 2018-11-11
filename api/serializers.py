@@ -1,5 +1,5 @@
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
-from rest_framework.fields import ModelField
 
 from .models.inspirehep import RecordMetadata, OrcidIdentity
 
@@ -26,5 +26,7 @@ class OrcidIdentityPlusTokenSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_token(self, model):
-        # TODO display access token encrypted
-        return str(model.remotetoken.access_token)
+        try:
+            return model.remotetoken.access_token_plain
+        except ObjectDoesNotExist:
+            return None

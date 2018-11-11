@@ -296,3 +296,9 @@ pip-selfcheck.json
 
 
 # End of https://www.gitignore.io/api/macos,python,django,pycharm,virtualenv
+
+
+## CUSTOM PART
+
+settings_development.py
+settings_development_*.py

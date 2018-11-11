@@ -153,3 +153,11 @@ GRANT SELECT ON ALL TABLES IN SCHEMA public TO "inspire-read-api";
 ALTER USER "inspire-read-api" CREATEDB;
 
  - Index on RemoteAccount.extra_data
+
+
+ TODO
+ ====
+ - less inline imports: split files
+ - add oauth
+ - encrypt tokens with Oauth secret
+ - use jq instead/with of smartget

@@ -16,20 +16,24 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'inspire-read-api',
         'USER': 'inspire-read-api',
-        'PASSWORD': 'Password123',
+        'PASSWORD': 'mypassword',
         # 'HOST': '127.0.0.1',
         # 'PORT': '5432',
     },
 
+    # To grant read permission to a user in PostreSQL:
+    # GRANT SELECT ON ALL TABLES IN SCHEMA public TO "inspire-read-api";
+    # To grant permission to create new dbs (used by Django test tools):
+    # ALTER USER "inspire-read-api" CREATEDB;
+
     INSPIRE_DATABASE_KEY: {
         'ENGINE': 'django.db.backends.postgresql',
-        #'NAME': 'inspire-prod-dump-201804',
-        'NAME': 'inspire-prod-dump-20181101',
+        'NAME': 'inspire-prod-dump',
         'USER': 'inspire-read-api',
-        'PASSWORD': 'Password123',
+        'PASSWORD': 'myotherpassword',
     }
 }
 
 
 # Key used to encrypt ORCID's access tokens.
-ORCID_TOKENS_ENCRYPTION_KEY = 'P6jJhYmcKG668InDIG4xSn3khfyGPvqCA9fYn4KFCTtuPgm8lRHsZACfk0RDFpPqkDOl4RhugpLyPUqsakEDmgFv4ru4f3vhE9VjdyCDJQtfzWGDGkyMGFvxFuWaFRhSEtTGwDIzV2criH1hMsmnvyKRBLX7jYFm9Vidn9BXANAWC7iYzkYfEXtEHs8UluGjSgg5bdUnfI6CCb33KKVWLFCxBpKSBFVwMNMOW21CTWwKUZgF6nSQSj8zSYeJHOzS'
+ORCID_TOKENS_ENCRYPTION_KEY = 'mykey'
