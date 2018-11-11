@@ -122,5 +122,24 @@
         "object_type": "rec",
         "object_uuid": "77812315-6e91-4c6e-b4e9-1f199bc6c66d"
     }
+},
+
+
+
+
+
+{
+    "model": "api.pidstorepid",
+    "pk": 9,
+    "fields": {
+        "created": "2017-03-16T13:13:37.917",
+        "updated": "2017-03-16T13:13:37.917",
+        "pid_type": "aut",
+        "pid_value": "7782",
+        "pid_provider": null,
+        "status": "K",
+        "object_type": "rec",
+        "object_uuid": "77822315-6e91-4c6e-b4e9-1f199bc6c66d"
+    }
 }
 ]

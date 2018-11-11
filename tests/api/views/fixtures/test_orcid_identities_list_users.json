@@ -73,5 +73,20 @@
         "current_login_ip": null,
         "login_count": null
     }
+},
+{
+    "model": "api.user",
+    "pk": 50008,
+    "fields": {
+        "email": "jane.doe4@cern.ch",
+        "password": null,
+        "active": null,
+        "confirmed_at": null,
+        "last_login_at": null,
+        "current_login_at": null,
+        "last_login_ip": null,
+        "current_login_ip": null,
+        "login_count": null
+    }
 }
 ]

@@ -63,6 +63,20 @@
                         {
                             "value": "INSPIRE-00365761",
                             "schema": "INSPIRE ID"
+                        }
+                    ],
+                    "uuid": "88c55e35-3897-4e67-b9c6-9ea9fbfaa008",
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/authors/7782"
+                    },
+                    "value": "Author pid not registered",
+                    "signature_block": "TANd"
+                },
+                {
+                    "ids": [
+                        {
+                            "value": "INSPIRE-00365761",
+                            "schema": "INSPIRE ID"
                         },
                         {
                             "value": "0000-0002-4133-9999",

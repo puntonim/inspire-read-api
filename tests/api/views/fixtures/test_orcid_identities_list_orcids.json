@@ -71,5 +71,20 @@
             "allow_push": true
         }
     }
+},
+{
+    "model": "api.orcididentity",
+    "pk": 6,
+    "fields": {
+        "orcid_value": "0000-0001-5498-7782",
+        "useridentity_user_id": 50008,
+        "user": 50008,
+        "client_id": "0000-0001-8607-8906",
+        "extra_data": {
+            "orcid": "0000-0001-5498-7782",
+            "full_name": "Jane Doe",
+            "allow_push": false
+        }
+    }
 }
 ]
