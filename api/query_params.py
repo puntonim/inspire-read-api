@@ -38,3 +38,13 @@ class QueryParamsParser:
             return False
         else:
             return None
+
+
+class QueryParamsParserMixin:
+    """
+    To be used in a typical view in combination with a (subclass of)
+    rest_framework.views.APIView.
+    """
+    def initial(self, *args, **kwargs):
+        self.query_params_parser = QueryParamsParser(self.request.query_params)
+        return super().initial(*args, **kwargs)

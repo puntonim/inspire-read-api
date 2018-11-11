@@ -1,6 +1,5 @@
 from . import exceptions
 from ..models.inspirehep import RecordMetadata
-from .query_params import QueryParamsParser
 
 
 def filter_record_json_by_fields(record, fields_include):
@@ -15,10 +14,10 @@ def filter_record_json_by_fields(record, fields_include):
 
 
 class RecordMetadataDetailDomainBase:
-    def __init__(self, pid_type, pid_value, query_params):
+    def __init__(self, pid_type, pid_value, query_params_parser):
         self.pid_type = pid_type
         self.pid_value = pid_value
-        self.query_params_parser = QueryParamsParser(query_params)
+        self.query_params_parser = query_params_parser
 
     def get_object(self):
         try:
@@ -35,8 +34,8 @@ class RecordMetadataDetailDomainBase:
 
 
 class RecordMetadataListDomainBase:
-    def __init__(self, query_params):
-        self.query_params_parser = QueryParamsParser(query_params)
+    def __init__(self, query_params_parser):
+        self.query_params_parser = query_params_parser
 
     def get_paginated_data(self, raw_data):
         for record in raw_data:

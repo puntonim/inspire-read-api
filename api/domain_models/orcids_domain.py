@@ -1,14 +1,12 @@
-from . import exceptions
 from ..models.inspirehep import RecordMetadata, OrcidIdentity
 
-from .query_params import QueryParamsParser
 from .record_metadata_base import (
-    RecordMetadataDetailDomainBase, RecordMetadataListDomainBase)
+    RecordMetadataListDomainBase)
 
 
 class OrcidIdentitiesListDomain(RecordMetadataListDomainBase):
-    def __init__(self, query_params):
-        self.query_params_parser = QueryParamsParser(query_params)
+    def __init__(self, query_params_parser):
+        self.query_params_parser = query_params_parser
 
     def get_queryset(self):
         # Always return ordered querysets because they will be paginated
