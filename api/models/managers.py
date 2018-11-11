@@ -97,3 +97,14 @@ class OrcidIdentityQuerySet(models.QuerySet):
                 orcid_identities_ids.append(
                     author_embedded.orcid_identity.id)
         return self.filter(id__in=orcid_identities_ids)
+
+    def get_by_author(self, pid_value):
+        from .inspirehep import RecordMetadata
+        author = RecordMetadata.author_objects.get_by_pid(pid_value)
+        orcid_identity = getattr(author.json_model.orcid_embedded, 'orcid_identity', None)
+        if not orcid_identity:
+            raise self.model.DoesNotExist
+        return orcid_identity
+
+    def filter_by_push(self, do_push):
+        return self.filter(extra_data__allow_push=do_push)

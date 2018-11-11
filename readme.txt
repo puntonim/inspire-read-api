@@ -47,8 +47,8 @@ https://orcid.org/0000-0002-0400-7555
 SELECT *, SELECT FEW
 ====================
 Per fare una query con SELECT id FROM:
-MyModel.objects.get().values('id')  # ritorna dict
-MyModel.objects.get().values_list('id', named=True)  # ritorna named tuple
+MyModel.objects.filter().values('id')  # ritorna dict
+MyModel.objects.filter().values_list('id', named=True)  # ritorna named tuple
 
 Per fare la stessa cosa dentro un record json:
 https://stackoverflow.com/a/45369944/1969672

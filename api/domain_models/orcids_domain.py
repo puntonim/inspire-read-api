@@ -1,3 +1,4 @@
+from . import exceptions
 from ..models.inspirehep import RecordMetadata, OrcidIdentity
 
 from .query_params import QueryParamsParser
@@ -15,8 +16,23 @@ class OrcidIdentitiesListDomain(RecordMetadataListDomainBase):
         queryset = OrcidIdentity.objects.all().order_by('id')
 
         # Query filters.
+        # Literature: ?literature=1126991
         literature_recid = self.query_params_parser.literature
         if literature_recid:
             queryset = queryset.filter_by_authored_literature(literature_recid)
+
+        # Author: ?author=1126991
+        author_recid = self.query_params_parser.author
+        if author_recid:
+            try:
+                orcid_identity = queryset.get_by_author(author_recid)
+                queryset = queryset.filter(id=orcid_identity.id)
+            except RecordMetadata.DoesNotExist:
+                queryset = queryset.filter(id=None)
+
+        # Push: ?push=true
+        do_push = self.query_params_parser.push
+        if do_push is not None:
+            queryset = queryset.filter_by_push(do_push)
 
         return queryset

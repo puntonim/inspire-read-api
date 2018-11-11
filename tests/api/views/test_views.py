@@ -221,3 +221,4 @@ class TestOrcidIdentitiesList(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.json()['count'], 0)
         self.assertListEqual(response.json()['results'], [])
+

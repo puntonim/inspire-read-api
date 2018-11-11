@@ -93,22 +93,27 @@ class AuthorsList(generics.ListAPIView):
         return data
 
 
+from api.domain_models.query_params import QueryParamsParser
+
 class OrcidIdentitiesList(generics.ListAPIView):
     """
     $ curl "127.0.0.1:8000/api/identities/orcid/?author=1039812&push=true&fields-extra=tokens"
-    $ curl "127.0.0.1:8000/api/identities/orcid/?literature=1126991&push=true&fields-extra=tokens"
+    $ curl "127.0.0.1:8000/api/identities/orcid/?literature=1126991&push=true&fields-extra=token"
     TODO:
      - push=true
      - author=xxxx
      - fields-extra=tokens
     """
-    serializer_class = serializers.OrcidIdentitySerializer
     domain_model_class = OrcidIdentitiesListDomain
+
+    def get_serializer_class(self):
+        query_params_parser = QueryParamsParser(self.request.query_params)
+        if query_params_parser.token_field_extra:
+            return serializers.OrcidIdentityPlusTokenSerializer
+        return serializers.OrcidIdentitySerializer
 
     def get_queryset(self, *args, **kwargs):
         self.domain_model = self.domain_model_class(
             query_params=self.request.query_params
         )
         return self.domain_model.get_queryset()
-
-

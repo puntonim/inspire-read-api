@@ -12,15 +12,29 @@ class QueryParamsParser:
         return list(filter(bool, fields_include_string.split(',')))
 
     @property
+    def fields_extra(self):
+        fields_extra_string = self.query_params.get('fields-extra', '')
+        # Split by , and filter out falsy.
+        return list(filter(bool, fields_extra_string.split(',')))
+
+    @property
+    def token_field_extra(self):
+        return 'token' in self.fields_extra
+
+    @property
     def literature(self):
         return self.query_params.get('literature', '')
 
     @property
+    def author(self):
+        return self.query_params.get('author', '')
+
+    @property
     def push(self):
         value = self.query_params.get('push', '')
-        if value.lower() == 'true':
+        if value.lower() in ['true', 'yes', 'y', '1']:
             return True
-        elif value.lower() == 'false':
+        elif value.lower() == ['false', 'no', 'n', '0']:
             return False
         else:
             return None
