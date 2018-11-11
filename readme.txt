@@ -104,34 +104,7 @@ Con UserIdentity e User 52921
 
 DELETED RECORD
 ==============
-Deleted record shoudl have PidstorePid.status = 'D'.
-And also RecordMetadata.json['deleted'] = True.
-Unfortunately there are some inconsistency, like for RecordMetadata.id
-  84f8960b-db32-4dee-b8ed-291da1f7fc3a
-  4f2d48a0-e81e-49c5-8296-63af4e093f89
-  981bc8cc-b7b8-48ce-917d-fd8c4b628969
-But we should consider PidstorePid.status to be our oracle.
-
-Thus, all queries like:
-RecordMetadata.objects.get_by_pid()
-RecordMetadata.objects.filter_by_pids()
-RecordMetadata.literature_objects.*
-RecordMetadata.author_objects.*
-are safe and return only registered records (PidstorePid.status = 'R').
-
-The only query that might return records in any state (so also deleted) is:
-RecordMetadata.objects.get()
-RecordMetadata.objects.all()
-which should be indeed rarely used, as the ones mentioned above are more handy.
-
-For the records, interesting queries for the field RecordMetadata.json['deleted']:
-- All non deleted:
-RecordMetadata.objects.filter(Q(json__deleted__isnull=True)|Q(json__deleted=False))
-  Note that:
-  RecordMetadata.objects.exclude(json__deleted=True)
-  extract only those that have deleted=False (not those that do not have `deleted`)
-- I tried several kind of indexes on json__deleted, but none is being used
-in queries, as the DB optimization chooses to use a filter (rather than the index).
+See readme-deleted.txt
 
 
 OPERAZIONI SU DB INSPIRE
@@ -144,6 +117,12 @@ GRANT SELECT ON ALL TABLES IN SCHEMA public TO "inspire-read-api";
 - RemoteAccount.extra_data to JSONB (prima di creare la view!):
 ALTER TABLE public.oauthclient_remoteaccount
     ALTER COLUMN extra_data SET DATA TYPE jsonb;
+
+- index on RemoteAccount.extra_data['allow_push']:
+  CREATE INDEX ix_oauthclient_remoteaccount_extra_data_allow_push
+  ON public.oauthclient_remoteaccount
+  USING btree ((extra_data -> 'allow_push'))
+Note that allow_push is always present and always 'true' or 'false'.
 
 - Creazione della view:
 Postgresql 9.6.2
@@ -172,3 +151,5 @@ GRANT SELECT ON ALL TABLES IN SCHEMA public TO "inspire-read-api";
 
 - Per i test locali l'utente deve poter creare i db di test:
 ALTER USER "inspire-read-api" CREATEDB;
+
+ - Index on RemoteAccount.extra_data

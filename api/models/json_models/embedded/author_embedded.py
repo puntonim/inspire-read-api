@@ -38,6 +38,10 @@ class AuthorEmbedded(utils.data.SmartgetDictMixin):
 
     @property
     def all_orcids_embedded(self):
+        """
+        The OrcidEmbedded in the AuthorEmbedded.
+        Plus the OrcidEmbedded in the actual author record.
+        """
         results = [self.orcid_embedded]
         # Business rule: the author must be curated in order to consider her
         # author_record_metadata.json_model.orcid_embedded.

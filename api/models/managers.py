@@ -106,5 +106,6 @@ class OrcidIdentityQuerySet(models.QuerySet):
             raise self.model.DoesNotExist
         return orcid_identity
 
-    def filter_by_push(self, do_push):
+    def filter_by_allow_push(self, do_push):
+        # extra_data['allow_push'] is always present and always 'true' or 'false'.
         return self.filter(extra_data__allow_push=do_push)

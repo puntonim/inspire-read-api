@@ -33,6 +33,6 @@ class OrcidIdentitiesListDomain(RecordMetadataListDomainBase):
         # Push: ?push=true
         do_push = self.query_params_parser.push
         if do_push is not None:
-            queryset = queryset.filter_by_push(do_push)
+            queryset = queryset.filter_by_allow_push(do_push)
 
         return queryset
