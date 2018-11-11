@@ -32,9 +32,9 @@ class QueryParamsParser:
     @property
     def push(self):
         value = self.query_params.get('push', '')
-        if value.lower() in ['true', 'yes', 'y', '1']:
+        if value.lower() in ['true', 't', 'yes', 'y', '1']:
             return True
-        elif value.lower() == ['false', 'no', 'n', '0']:
+        elif value.lower() in ['false', 'f', 'no', 'n', '0']:
             return False
         else:
             return None

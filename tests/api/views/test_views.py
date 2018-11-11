@@ -148,7 +148,7 @@ class TestAuthorsList(TestCase):
         for i, rec in enumerate(recs):
             assertRecordMetadataEqual(response.json()['results'][i], rec)
 
-    def test_get_by_literature(self):
+    def test_filter_by_literature(self):
         lit_pid_value = 6666
         query_params = 'literature={}'.format(lit_pid_value)
         response = self.client.get('{}?{}'.format(self.base_url, query_params))
@@ -158,7 +158,7 @@ class TestAuthorsList(TestCase):
         for i, rec in enumerate(recs):
             assertRecordMetadataEqual(response.json()['results'][i], rec)
 
-    def test_get_by_literature_nonexistent(self):
+    def test_filter_by_literature_nonexistent(self):
         lit_pid_value = 1
         query_params = 'literature={}'.format(lit_pid_value)
         response = self.client.get('{}?{}'.format(self.base_url, query_params))
@@ -166,7 +166,7 @@ class TestAuthorsList(TestCase):
         self.assertEquals(response.json()['count'], 0)
         self.assertListEqual(response.json()['results'], [])
 
-    def test_get_by_literature_pid_not_registered(self):
+    def test_filter_by_literature_pid_not_registered(self):
         lit_pid_value = 6668
         query_params = 'literature={}'.format(lit_pid_value)
         response = self.client.get('{}?{}'.format(self.base_url, query_params))
@@ -195,7 +195,7 @@ class TestOrcidIdentitiesList(TestCase):
         for i, orcid in enumerate(orcids):
             assertOrcidIdentityEqual(response.json()['results'][i], orcid)
 
-    def test_get_by_literature(self):
+    def test_filter_by_literature(self):
         lit_pid_value = 6666
         query_params = 'literature={}'.format(lit_pid_value)
         response = self.client.get('{}?{}'.format(self.base_url, query_params))
@@ -206,7 +206,7 @@ class TestOrcidIdentitiesList(TestCase):
         for i, orcid in enumerate(orcids):
             assertOrcidIdentityEqual(response.json()['results'][i], orcid)
 
-    def test_get_by_literature_nonexistent(self):
+    def test_filter_by_literature_nonexistent(self):
         lit_pid_value = 1
         query_params = 'literature={}'.format(lit_pid_value)
         response = self.client.get('{}?{}'.format(self.base_url, query_params))
@@ -214,7 +214,7 @@ class TestOrcidIdentitiesList(TestCase):
         self.assertEquals(response.json()['count'], 0)
         self.assertListEqual(response.json()['results'], [])
 
-    def test_get_by_literature_pid_not_registered(self):
+    def test_filter_by_literature_pid_not_registered(self):
         lit_pid_value = 6668
         query_params = 'literature={}'.format(lit_pid_value)
         response = self.client.get('{}?{}'.format(self.base_url, query_params))
@@ -222,3 +222,40 @@ class TestOrcidIdentitiesList(TestCase):
         self.assertEquals(response.json()['count'], 0)
         self.assertListEqual(response.json()['results'], [])
 
+    def test_filter_by_push_true(self):
+        query_params = 'push=true'
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 4)
+        orcids = OrcidIdentity.objects.filter_by_allow_push(True)
+        for i, orcid in enumerate(orcids):
+            assertOrcidIdentityEqual(response.json()['results'][i], orcid)
+
+    def test_filter_by_push_false(self):
+        query_params = 'push=false'
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 1)
+        orcids = OrcidIdentity.objects.filter_by_allow_push(False)
+        for i, orcid in enumerate(orcids):
+            assertOrcidIdentityEqual(response.json()['results'][i], orcid)
+
+    def test_filter_by_push_and_literature(self):
+        lit_pid_value = 6666
+        query_params = 'literature={}&push=true'.format(lit_pid_value)
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 1)
+        orcids = OrcidIdentity.objects\
+            .filter(orcid_value__in=['0000-0001-5498-9174', '0000-0002-4133-1234'])\
+            .filter_by_allow_push(True)
+        for i, orcid in enumerate(orcids):
+            assertOrcidIdentityEqual(response.json()['results'][i], orcid)
+
+    def test_filter_by_push_and_literature_pid_not_registered(self):
+        lit_pid_value = 6668
+        query_params = 'literature={}&push=true'.format(lit_pid_value)
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 0)
+        self.assertListEqual(response.json()['results'], [])
