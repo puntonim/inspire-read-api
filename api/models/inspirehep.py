@@ -65,6 +65,7 @@ class PidstorePid(models.Model):
     class Meta:
         managed = MANAGED
         db_table = 'pidstore_pid'
+        default_related_name = 'pidstore_pid_set'
         unique_together = (('pid_type', 'pid_value'),)
 
 
@@ -96,7 +97,7 @@ class RecordMetadata(models.Model):
 
     @property
     def pid(self):
-        return self.pidstorepid_set.get(status=PidstorePid.STATUS_REGISTERED)
+        return self.pidstore_pid_set.get(status=PidstorePid.STATUS_REGISTERED)
 
     @property
     def json_model(self):
@@ -176,7 +177,7 @@ class User(models.Model):
 
     @property
     def orcid_identity(self):
-        return self.orcididentity_set.get(client_id=settings.ORCID_APP_CONSUMER_KEY)
+        return self.orcid_identity_set.get(client_id=settings.ORCID_APP_CONSUMER_KEY)
 
 
 # class UserIdentity(models.Model):
@@ -226,6 +227,7 @@ class RemoteToken(models.Model):
     class Meta:
         managed = MANAGED
         db_table = 'oauthclient_remotetoken'
+        default_related_name = 'remote_token'
         # Primary key: (id_remote_account, token_type)
         unique_together = (('orcid_identity', 'token_type'),)
 
@@ -266,5 +268,6 @@ class OrcidIdentity(models.Model):
     class Meta:
         managed = MANAGED
         db_table = 'oauthclient_orcid_identity'
+        default_related_name = 'orcid_identity_set'
         # # Primary key: (id_remote_account, token_type)
         # unique_together = (('remote_account', 'token_type'),)

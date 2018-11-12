@@ -157,6 +157,7 @@ ALTER USER "inspire-read-api" CREATEDB;
 
  TODO
  ====
+ - deleted records
  - less inline imports: split files
  - add oauth
  - encrypt tokens with Oauth secret

@@ -5,23 +5,34 @@ PID STATUS VS JSON['deleted']
 =============================
 Deleted record should have PidstorePid.status = 'D'.
 And also RecordMetadata.json['deleted'] = True.
+
 Unfortunately there are some inconsistency, like for RecordMetadata.id
   84f8960b-db32-4dee-b8ed-291da1f7fc3a
   4f2d48a0-e81e-49c5-8296-63af4e093f89
   981bc8cc-b7b8-48ce-917d-fd8c4b628969
-But we should consider PidstorePid.status to be our oracle.
 
-If PidstorePid.status to be our oracle then all queries like:
+This is caused by a bug in the migration process, so we migh have records
+with json['deleted'] but with pid status = 'R'.
+
+***
+So a record is to be considered deleted if either:
+- Pid status is deleted (no matters json['deleted'])
+or if:
+- json['deleted'] = true (no matters the pid status)
+***
+
+So the code in this repo should be fixed.
+Note that all queries like:
   >>> RecordMetadata.objects.get_by_pid()
   >>> RecordMetadata.objects.filter_by_pids()
   >>> RecordMetadata.literature_objects.*
   >>> RecordMetadata.author_objects.*
-are safe because they return only registered records (PidstorePid.status = 'R').
+return only registered records (PidstorePid.status = 'R').
 
-The only queries that might return records in any state (so also deleted) is:
+But queries like:
   >>> RecordMetadata.objects.get()
   >>> RecordMetadata.objects.all()
-which should be indeed rarely used, as the ones mentioned above are more handy.
+return just all records.
 
 
 INDEX TYPE
