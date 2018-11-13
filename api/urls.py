@@ -26,6 +26,8 @@ urlpatterns = [
 
     re_path(r'^api/literature/(?P<pid_value>[\w]+)/$', views.LiteratureDetail.as_view(),
             name='literature-detail'),
+    re_path(r'^api/literature/$', views.LiteratureList.as_view(),
+            name='literature-list'),
     re_path(r'^api/authors/(?P<pid_value>[\w]+)/$', views.AuthorDetail.as_view(),
             name='author-detail'),
     re_path(r'^api/authors/$', views.AuthorsList.as_view(),

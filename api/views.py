@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from . import serializers
 from .domain_models.record_metadata_base import RecordMetadataDetailDomainBase
 from .domain_models.authors_domain import AuthorsListDomain
+from .domain_models.literature_domain import LiteratureListDomain
 from .domain_models.orcids_domain import OrcidIdentitiesListDomain
 from .domain_models import exceptions as domain_exceptions
 from .query_params import QueryParamsParserMixin
@@ -49,11 +50,29 @@ class LiteratureDetail(QueryParamsParserMixin, generics.RetrieveAPIView):
         return Response(serializer.data)
 
 
-# TODO
-# class LiteratureList(generics.ListAPIView):
-#     """
-#     TODO $ ** HARD curl "127.0.0.1:8000/api/literature/?author=1607170&fields-include=titles"
-#     """
+class LiteratureList(QueryParamsParserMixin, generics.ListAPIView):
+    """
+    TODO $ ** HARD curl "127.0.0.1:8000/api/literature/?author=1607170&fields-include=titles"
+    """
+    serializer_class = serializers.RecordMetadataSerializer
+    domain_model_class = LiteratureListDomain
+
+    def get_queryset(self, *args, **kwargs):
+        self.domain_model = self.domain_model_class(
+            query_params_parser=self.query_params_parser
+        )
+        return self.domain_model.get_queryset()
+
+    def paginate_queryset(self, *args, **kwargs):
+        raw_data = super().paginate_queryset(*args, **kwargs)
+        try:
+            data = self.domain_model.get_paginated_data(raw_data)
+        except Exception:  # TODO
+            raise
+        return data
+
+
+
 
 class AuthorDetail(LiteratureDetail):
     """
@@ -86,7 +105,7 @@ class AuthorsList(QueryParamsParserMixin, generics.ListAPIView):
         raw_data = super().paginate_queryset(*args, **kwargs)
         try:
             data = self.domain_model.get_paginated_data(raw_data)
-        except Exception:
+        except Exception:  # TODO
             raise
         return data
 

@@ -25,7 +25,7 @@ def assertOrcidIdentityEqual(serialized, orcid_identity_instance, has_token=Fals
     t.assertEquals(serialized['user'], orcid_identity_instance.user.id)
     if has_token:
         try:
-            plain = orcid_identity_instance.remotetoken.access_token_plain
+            plain = orcid_identity_instance.remote_token.access_token_plain
         except ObjectDoesNotExist:
             plain = None
         t.assertEquals(serialized['token'], plain)

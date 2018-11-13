@@ -27,6 +27,6 @@ class OrcidIdentityPlusTokenSerializer(serializers.ModelSerializer):
 
     def get_token(self, model):
         try:
-            return model.remotetoken.access_token_plain
+            return model.remote_token.access_token_plain
         except ObjectDoesNotExist:
             return None
