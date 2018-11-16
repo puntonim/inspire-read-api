@@ -160,3 +160,5 @@ MIGRATION_MODULES = {
 
 # Key used to encrypt ORCID's access tokens.
 ORCID_TOKENS_ENCRYPTION_KEY = 'mykey'
+
+RECORD_METADATA_JSON_AUTHORS_RECORD_REF_BASE_URL = 'http://labs.inspirehep.net/api/authors'

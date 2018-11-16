@@ -52,7 +52,8 @@ class LiteratureDetail(QueryParamsParserMixin, generics.RetrieveAPIView):
 
 class LiteratureList(QueryParamsParserMixin, generics.ListAPIView):
     """
-    TODO $ ** HARD curl "127.0.0.1:8000/api/literature/?author=1607170&fields-include=titles"
+    $ curl "127.0.0.1:8000/api/literature/?author=1607170&fields-include=titles"
+    TODO add tests
     """
     serializer_class = serializers.RecordMetadataSerializer
     domain_model_class = LiteratureListDomain
@@ -70,8 +71,6 @@ class LiteratureList(QueryParamsParserMixin, generics.ListAPIView):
         except Exception:  # TODO
             raise
         return data
-
-
 
 
 class AuthorDetail(LiteratureDetail):

@@ -73,9 +73,11 @@ So keep the standard naming convention!
 
 FIXTURES
 ========
-To create fixtures use as template the examples in tests/fixtures_examples.
+Note: test factories (like the ones in Inspire next) are a more handy tool
+than Django's fixture.
+To create fixtures use the templates tests/fixtures_examples.
 In order to generate new fixtures from the db, you need some tricks.
-- If your db is too bid and you want to dump only a few data, override the default
+- If your db is too big and you want to dump only a few data, override the default
 custom manager this way:
   class RecordMetadataManager(models.Manager):
       def get_queryset(self):
@@ -124,6 +126,12 @@ ALTER TABLE public.oauthclient_remoteaccount
   USING btree ((extra_data -> 'allow_push'))
 Note that allow_push is always present and always 'true' or 'false'.
 
+- index on RecordMetadata.json['authors']
+CREATE INDEX ix_records_metadata_json_authors
+ON public.records_metadata
+USING gin ((json -> 'authors'));
+Note: it took ~21 min on my computer and 1500 Mbytes
+
 - Creazione della view:
 Postgresql 9.6.2
 https://www.postgresql.org/docs/9.6/static/sql-createview.html
@@ -152,7 +160,6 @@ GRANT SELECT ON ALL TABLES IN SCHEMA public TO "inspire-read-api";
 - Per i test locali l'utente deve poter creare i db di test:
 ALTER USER "inspire-read-api" CREATEDB;
 
- - Index on RemoteAccount.extra_data
 
 
  TODO
@@ -162,3 +169,4 @@ ALTER USER "inspire-read-api" CREATEDB;
  - add oauth
  - encrypt tokens with Oauth secret
  - use jq instead/with of smartget
+ - replace fixtures with testfactories

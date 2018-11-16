@@ -1,6 +1,7 @@
 """
 Managers encapsulate queries on models.
 """
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
@@ -44,7 +45,12 @@ class RecordMetadataLiteratureQuerySet(RecordMetadataQuerySet):
         return super().filter_by_pids(pid_values, pid_type='lit', pid_status=pid_status)
 
     def filter_by_author(self, pid_value):
-        raise NotImplementedError  # TODO
+        url = '{}/{}'.format(
+            settings.RECORD_METADATA_JSON_AUTHORS_RECORD_REF_BASE_URL,
+            pid_value)
+        return self.filter(json__authors__contains=[
+            {"record": {"$ref": url}},
+            {"curated_relation": True}])
 
 
 class _RecordMetadataLiteratureManager(models.Manager):

@@ -10,10 +10,10 @@ class LiteratureListDomain(RecordMetadataListDomainBase):
         # later on.
         queryset = RecordMetadata.literature_objects.all().order_by('id')
 
-        # # Query filters.
-        # # Literature: ?literature=1126991
-        # literature_recid = self.query_params_parser.literature
-        # if literature_recid:
-        #     queryset = queryset.filter_by_literature(literature_recid)
+        # Query filters.
+        # Author: ?author=1126991
+        author_recid = self.query_params_parser.author
+        if author_recid:
+            queryset = queryset.filter_by_author(author_recid)
 
         return queryset
