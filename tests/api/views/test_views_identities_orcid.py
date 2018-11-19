@@ -1,6 +1,6 @@
-from django.test import TestCase, TransactionTestCase
+from django.test import TestCase
 
-from api.models.inspirehep import RecordMetadata, OrcidIdentity
+from api.models.inspirehep import OrcidIdentity
 
 from .assertions import assertOrcidIdentityEqual
 

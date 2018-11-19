@@ -1,6 +1,6 @@
-from django.test import TestCase, TransactionTestCase
+from django.test import TestCase
 
-from api.models.inspirehep import RecordMetadata, OrcidIdentity
+from api.models.inspirehep import RecordMetadata
 
 from .assertions import assertRecordMetadataEqual
 
@@ -13,21 +13,23 @@ class TestAuthorDetail(TestCase):
 
     def setUp(self, **kwargs):
         self.pid_value = 7777
-        self.base_url = '/api/authors/{}/'.format(self.pid_value)
+        self.base_url = '/api/authors/'
+        self.url = '{}{}/'.format(self.base_url, self.pid_value)
 
     def test_get(self):
-        response = self.client.get(self.base_url)
+        response = self.client.get(self.url)
         self.assertEquals(response.status_code, 200)
         rec = RecordMetadata.author_objects.get_by_pid(self.pid_value)
         assertRecordMetadataEqual(response.json(), rec)
 
     def test_get_pid_not_registered(self):
-        base_url = '/api/authors/9999/'
-        response = self.client.get(base_url)
+        url = '{}9999/'.format(self.base_url)
+        response = self.client.get(url)
         self.assertEquals(response.status_code, 404)
 
     def test_get_404(self):
-        response = self.client.get('/api/literature/00000/')
+        url = '{}00000/'.format(self.base_url)
+        response = self.client.get(url)
         self.assertEquals(response.status_code, 404)
 
 
