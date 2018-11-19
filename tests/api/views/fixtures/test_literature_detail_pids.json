@@ -15,7 +15,7 @@
 },
 
 
-  {
+{
     "model": "api.pidstorepid",
     "pk": 2,
     "fields": {
@@ -31,7 +31,7 @@
 },
 
 
-  {
+{
     "model": "api.pidstorepid",
     "pk": 3,
     "fields": {

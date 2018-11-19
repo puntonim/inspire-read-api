@@ -30,6 +30,10 @@ class QueryParamsParser:
         return self.query_params.get('author', '')
 
     @property
+    def orcid(self):
+        return self.query_params.get('orcid', '')
+
+    @property
     def push(self):
         value = self.query_params.get('push', '')
         if value.lower() in ['true', 't', 'yes', 'y', '1']:

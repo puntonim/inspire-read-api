@@ -16,4 +16,9 @@ class AuthorsListDomain(RecordMetadataListDomainBase):
         if literature_recid:
             queryset = queryset.filter_by_literature(literature_recid)
 
+        # Orcid embedded: ?orcid=0000-0001-5498-9174
+        orcid = self.query_params_parser.orcid
+        if orcid:
+            queryset = queryset.filter_by_orcid_embedded(orcid)
+
         return queryset

@@ -76,3 +76,28 @@ class TestAuthorsList(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.json()['count'], 0)
         self.assertListEqual(response.json()['results'], [])
+
+    def test_filter_by_orcid(self):
+        orcid_value = '0000-0001-5498-9174'
+        query_params = 'orcid={}'.format(orcid_value)
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 1)
+        aut = RecordMetadata.author_objects.get_by_pid(7777)
+        assertRecordMetadataEqual(response.json()['results'][0], aut)
+
+    def test_filter_by_orcid_nonexistent(self):
+        orcid_value = '0000-0001-5498-XXXX'
+        query_params = 'orcid={}'.format(orcid_value)
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 0)
+        self.assertListEqual(response.json()['results'], [])
+
+    def test_filter_by_orcid_pid_not_registered(self):
+        orcid_value = '0000-0001-5498-YYYY'
+        query_params = 'orcid={}'.format(orcid_value)
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 0)
+        self.assertListEqual(response.json()['results'], [])

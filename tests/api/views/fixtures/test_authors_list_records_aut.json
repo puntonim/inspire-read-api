@@ -154,6 +154,10 @@
                 {
                     "value": "HEPNAMES-1113712",
                     "schema": "SPIRES"
+                },
+                {
+                    "value": "0000-0001-5498-YYYY",
+                    "schema": "ORCID"
                 }
             ],
             "name": {

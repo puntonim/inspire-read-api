@@ -53,7 +53,6 @@ class LiteratureDetail(QueryParamsParserMixin, generics.RetrieveAPIView):
 class LiteratureList(QueryParamsParserMixin, generics.ListAPIView):
     """
     $ curl "127.0.0.1:8000/api/literature/?author=1607170&fields-include=titles"
-    TODO add tests
     """
     serializer_class = serializers.RecordMetadataSerializer
     domain_model_class = LiteratureListDomain
@@ -84,12 +83,7 @@ class AuthorDetail(LiteratureDetail):
 class AuthorsList(QueryParamsParserMixin, generics.ListAPIView):
     """
     $ curl "127.0.0.1:8000/api/authors/?literature=335152&fields-include=name,ids"
-    TODO $ curl "127.0.0.1:8000/api/authors/?orcid=0000-1234-...&push=true&fields-include=name,ids"
-
-    orcid_object = '[{"schema": "ORCID", "value": "%s"}]' % orcid
-    # this first query is written in a way that can use the index on (json -> ids)
-    author_rec_uuid = db.session.query(RecordMetadata.id)\
-        .filter(type_coerce(RecordMetadata.json, JSONB)['ids'].contains(orcid_object)).one().id
+    $ curl "127.0.0.1:8000/api/authors/?orcid=0000-1234-...&fields-include=name,ids"
     """
     serializer_class = serializers.RecordMetadataSerializer
     domain_model_class = AuthorsListDomain

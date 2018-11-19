@@ -49,7 +49,8 @@ class RecordMetadataLiteratureQuerySet(RecordMetadataQuerySet):
             settings.RECORD_METADATA_JSON_AUTHORS_RECORD_REF_BASE_URL,
             pid_value)
         return self.filter(json__authors__contains=[
-            {"record": {"$ref": url}, "curated_relation": True}])
+            {'record': {'$ref': url}, 'curated_relation': True}
+        ])
 
 
 class _RecordMetadataLiteratureManager(models.Manager):
@@ -74,6 +75,11 @@ class RecordMetadataAuthorsQuerySet(RecordMetadataQuerySet):
             return self.filter_by_pids([])
         recids = [aut.recid for aut in literature.json_model.authors_embedded if aut.recid]
         return self.filter_by_pids(recids)
+
+    def filter_by_orcid_embedded(self, orcid):
+        return self.filter(json__ids__contains=[
+            {'schema': 'ORCID', 'value': orcid}
+        ])
 
 
 class _RecordMetadataAuthorsManager(models.Manager):
