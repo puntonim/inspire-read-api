@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, TransactionTestCase
 
 from api.models.inspirehep import RecordMetadata
 
@@ -40,7 +40,6 @@ class TestLiteratureList(TestCase):
     )
 
     def setUp(self, **kwargs):
-        self.pid_value = 7777
         self.base_url = '/api/literature/'
 
     def test_filter_by_author(self):
@@ -48,4 +47,31 @@ class TestLiteratureList(TestCase):
         query_params = 'author={}'.format(aut_pid_value)
         response = self.client.get('{}?{}'.format(self.base_url, query_params))
         self.assertEquals(response.status_code, 200)
-        self.assertEquals(response.json()['count'], 1)
+        self.assertEquals(response.json()['count'], 2)
+        recs = RecordMetadata.literature_objects.filter_by_pids([7777, 7778]).order_by('id')
+        for i, rec in enumerate(recs):
+            assertRecordMetadataEqual(response.json()['results'][i], rec)
+
+    def test_filter_by_author_nonexistent(self):
+        aut_pid_value = 1
+        query_params = 'author={}'.format(aut_pid_value)
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 0)
+        self.assertListEqual(response.json()['results'], [])
+
+    def test_filter_by_author_lit_pid_not_registered(self):
+        aut_pid_value = 4444
+        query_params = 'author={}'.format(aut_pid_value)
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 0)
+        self.assertListEqual(response.json()['results'], [])
+
+    def test_filter_by_author_non_curated(self):
+        aut_pid_value = 999999
+        query_params = 'author={}'.format(aut_pid_value)
+        response = self.client.get('{}?{}'.format(self.base_url, query_params))
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['count'], 0)
+        self.assertListEqual(response.json()['results'], [])

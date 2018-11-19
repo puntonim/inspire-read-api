@@ -241,7 +241,38 @@
                     "value": "10.1111/j.1365-2966.2010.16335.x"
                 }
             ],
-            "control_number": 7778
+            "control_number": 7778,
+            "authors": [
+                {
+                    "ids": [
+                        {
+                            "value": "K.L.Masters.1",
+                            "schema": "INSPIRE BAI"
+                        }
+                    ],
+                    "uuid": "0fdff9b4-9a5c-4f63-8f42-5047b5e89d00",
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/authors/1037997"
+                    },
+                    "full_name": "Masters, Karen L.",
+                    "signature_block": "MASTARk",
+                    "curated_relation": true
+                },
+                {
+                    "ids": [
+                        {
+                            "value": "K.L.Masters.1",
+                            "schema": "INSPIRE BAI"
+                        }
+                    ],
+                    "uuid": "0fdff9b4-9a5c-4f63-8f42-5047b5e89d00",
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/authors/4444"
+                    },
+                    "full_name": "Masters, Karen L.",
+                    "signature_block": "MASTARk"
+                }
+            ]
         },
         "version_id": 23
     }
@@ -261,7 +292,24 @@
                     "value": "10.1111/j.1365-2966.2010.16335.x"
                 }
             ],
-            "control_number": 9999
+            "control_number": 9999,
+            "authors": [
+                {
+                    "ids": [
+                        {
+                            "value": "K.L.Masters.1",
+                            "schema": "INSPIRE BAI"
+                        }
+                    ],
+                    "uuid": "0fdff9b4-9a5c-4f63-8f42-5047b5e89d00",
+                    "record": {
+                        "$ref": "http://labs.inspirehep.net/api/authors/1037997"
+                    },
+                    "full_name": "Masters, Karen L.",
+                    "signature_block": "MASTARk",
+                    "curated_relation": true
+                }
+            ]
         },
         "version_id": 23
     }

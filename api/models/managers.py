@@ -49,8 +49,7 @@ class RecordMetadataLiteratureQuerySet(RecordMetadataQuerySet):
             settings.RECORD_METADATA_JSON_AUTHORS_RECORD_REF_BASE_URL,
             pid_value)
         return self.filter(json__authors__contains=[
-            {"record": {"$ref": url}},
-            {"curated_relation": True}])
+            {"record": {"$ref": url}, "curated_relation": True}])
 
 
 class _RecordMetadataLiteratureManager(models.Manager):
