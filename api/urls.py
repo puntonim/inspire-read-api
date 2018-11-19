@@ -32,6 +32,8 @@ urlpatterns = [
             name='author-detail'),
     re_path(r'^api/authors/$', views.AuthorsList.as_view(),
             name='authors-list'),
+    re_path(r'^api/identities/orcid/(?P<orcid_value>[\w-]+)/$', views.OrcidIdentityDetail.as_view(),
+            name='orcid-identities-detail'),
     re_path(r'^api/identities/orcid/$', views.OrcidIdentitiesList.as_view(),
             name='orcid-identities-list'),
 

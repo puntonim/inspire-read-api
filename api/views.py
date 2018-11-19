@@ -9,7 +9,7 @@ from . import serializers
 from .domain_models.record_metadata_base import RecordMetadataDetailDomainBase
 from .domain_models.authors_domain import AuthorsListDomain
 from .domain_models.literature_domain import LiteratureListDomain
-from .domain_models.orcids_domain import OrcidIdentitiesListDomain
+from .domain_models.orcids_domain import OrcidIdentitiesListDomain, OrcidIdentityDetailDomain
 from .domain_models import exceptions as domain_exceptions
 from .query_params import QueryParamsParserMixin
 
@@ -101,6 +101,28 @@ class AuthorsList(QueryParamsParserMixin, generics.ListAPIView):
         except Exception:  # TODO
             raise
         return data
+
+
+class OrcidIdentityDetail(QueryParamsParserMixin, generics.RetrieveAPIView):
+    """
+    $ curl 127.0.0.1:8000/api/identities/orcid/0000-1234-.../?fields-extra=token,author
+    # TODO: TESTS for author (fields-extra)
+    """
+    serializer_class = serializers.OrcidIdentitySerializer
+    domain_model_class = OrcidIdentityDetailDomain
+
+    def retrieve(self, request, *args, **kwargs):
+        domain = self.domain_model_class(
+            orcid_value=self.kwargs['orcid_value'],
+            query_params_parser=self.query_params_parser
+        )
+        try:
+            data = domain.get_data()
+        except domain_exceptions.OrcidIdentityDoesNotExist:
+            raise NotFound
+        serializer = self.get_serializer(
+            data, fields_extra=self.query_params_parser.fields_extra)
+        return Response(serializer.data)
 
 
 class OrcidIdentitiesList(QueryParamsParserMixin, generics.ListAPIView):

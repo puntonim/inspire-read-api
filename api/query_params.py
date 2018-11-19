@@ -22,6 +22,10 @@ class QueryParamsParser:
         return 'token' in self.fields_extra
 
     @property
+    def author_field_extra(self):
+        return 'author' in self.fields_extra
+
+    @property
     def literature(self):
         return self.query_params.get('literature', '')
 
