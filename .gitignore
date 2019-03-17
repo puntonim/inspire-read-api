@@ -302,3 +302,4 @@ pip-selfcheck.json
 
 settings_development.py
 settings_development_*.py
+.idea/
